@@ -2,6 +2,21 @@
   text-align: center;
 }
 
+.trackField {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.field {
+  z-index: 0;
+  height: 100vh;
+  width: auto;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -15,4 +30,4 @@
 
 .App-link {
   color: #61dafb;
-}    
+}   

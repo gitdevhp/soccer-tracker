@@ -4,7 +4,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header"></header>
-      <img src='/src/img/field.png' alt='Field'></img>
+      <div className='trackField'>
+        <img src='/src/img/field.png' alt='Field' className='field'></img>
+      </div>
     </div>
   );
 }
