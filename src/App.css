@@ -31,3 +31,20 @@
 .App-link {
   color: #61dafb;
 }   
+
+.dashboard {
+  background-color: antiquewhite;
+  width: 100vw;
+  height: 100vh;
+}
+
+.navbar {
+  background-color: lightgray;
+  width: 100vw;
+  height: fit-content; /* adjust pls */
+}
+
+.containTop {
+  display: flex;
+  justify-content: space-evenly;
+}

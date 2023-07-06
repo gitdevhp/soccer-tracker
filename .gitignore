@@ -1,5 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+#api thing REACT_APP_API_URL="https://mock-api.binaryboxtuts.com/"
+
 # dependencies
 /node_modules
 /.pnp
