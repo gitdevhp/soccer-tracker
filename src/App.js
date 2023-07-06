@@ -10,8 +10,8 @@ function App() {
   return (
     <Router>
       <Routes>
-          <Route exact path="/"  element={<Login/>} />
-          <Route path="/register"  element={<Register/>} />
+          <Route exact path="/"  element={<Homepage/>} />
+          <Route path="/register"  element={<Field/>} />
           <Route path="/dashboard"  element={<Dashboard/>} />
       </Routes>
     </Router>
