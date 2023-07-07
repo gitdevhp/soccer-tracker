@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react"
 import Layout from "../components/Layout"
+import { BrowserRouter as Link } from 'react-router-dom';
 
 function Dashboard() {
     const [hasDataGot, setHasDataGot] = useState(false); //use to check if data has loaded
@@ -13,7 +14,7 @@ function Dashboard() {
         if (grids > 0) {
             var indents = [];
             for (var i = 0; i < grids; i++) {
-                indents.push(<div className='graph-${i}' key={i}></div>);
+                indents.push(<div className='graph-${i} flexGraph' key={i}></div>);
             }
             return indents;
         } else {
