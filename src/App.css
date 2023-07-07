@@ -32,19 +32,14 @@
   color: #61dafb;
 }   
 
-.dashboard {
-  background-color: antiquewhite;
-  width: 100vw;
-  height: 100vh;
-}
-
-.navbar {
-  background-color: lightgray;
-  width: 100vw;
-  height: fit-content; /* adjust pls */
-}
-
-.containTop {
+#data-flex {
   display: flex;
-  justify-content: space-evenly;
+  flex-wrap: wrap;
+  width: 100vw;
+  height: 90vh;
+}
+
+#user-bar {
+  width: 100vw;
+  height: 10vh;
 }
