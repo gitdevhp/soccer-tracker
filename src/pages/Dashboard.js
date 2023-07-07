@@ -32,7 +32,7 @@ function Dashboard() {
                     {makeGrids}
                 </div>
                 <div id="user-bar">
-                    <p id='name'>Hello, User!</p> <p id='edition'>0.0.1</p>
+                    <p id='name'>Hello, User!</p> <p className="text-center">Need to Adjust? <Link to="/settings">Settings</Link></p> <p id='edition'>0.0.1</p>
                 </div>
             </Layout>
         </>
