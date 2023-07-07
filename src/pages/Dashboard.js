@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react"
 import Layout from "../components/Layout"
-import { BrowserRouter as Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Dashboard() {
     const [hasDataGot, setHasDataGot] = useState(false); //use to check if data has loaded
