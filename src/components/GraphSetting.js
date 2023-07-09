@@ -27,14 +27,14 @@ const GraphSetting = ({ children }) => {
         {children}
       <div className='menu-container' ref={menuRef}>
         <div className='menu-trigger' onClick={()=>{setOpen(!open)}}>
-          <h2> Graph Settings </h2>
+          <button id='graphForm'> No Graph Selected </button>
         </div>
 
         <div className={`dropdown-menu ${open? 'active' : 'inactive'}`} >
           <ul>
-            <DropdownItem text = {"Tackles"}/>
-            <DropdownItem text = {"Shots"}/>
-            <DropdownItem text = {"Passes"}/>
+            <DropdownItem text = {"Tackles"} onClick={() => document.getElementById('graphFrom').innerHTML = 'Tackles'}/>
+            <DropdownItem text = {"Shots"} onClick={() => document.getElementById('graphFrom').innerHTML = 'Shots'}/>
+            <DropdownItem text = {"Passes"} onClick={() => document.getElementById('graphForm').innerHTML = 'Passes'}/>
           </ul>
         </div>
       </div>
