@@ -24,7 +24,6 @@ function LocalStorage() {
     return (
         <>
             <Layout className="settin" >
-                <input ref={data} />
                 <h3>Graph Settings</h3>
                 <GraphSetting>
 
