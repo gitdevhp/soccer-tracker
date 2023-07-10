@@ -1,8 +1,7 @@
 import React, { useRef } from "react";
 import GraphSetting from "../components/GraphSetting";
 import Layout from "../components/Layout";
-
-var formType = document.getElementById("graphForm").innerHTML;
+import formType from "../components/GraphSetting";
 
 function LocalStorage() {
     const data = useRef();
@@ -24,12 +23,13 @@ function LocalStorage() {
     localStorage.setItem('GraphSettings', JSON.stringify({...LocalSettings}));
     return (
         <>
-            <Layout>
+            <Layout className="settin" >
                 <input ref={data} />
                 <h3>Graph Settings</h3>
                 <GraphSetting>
 
                 </GraphSetting>
+                <button className="addGraph" onClick={() => document.getElementsByClassName('settin').appendChild(<GraphSetting></GraphSetting>)}>Add New Graph</button>
                 <button className="save" onClick={() => setGraph(1,formType)}>Save</button> {/*change 1st parameter to graph # must be fixed*/}
             </Layout>
         </>

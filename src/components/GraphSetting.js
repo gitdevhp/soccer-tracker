@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
+export var formType = 'none';
 
 const GraphSetting = ({ children }) => {
     const [open, setOpen] = useState(false);
@@ -22,6 +23,10 @@ const GraphSetting = ({ children }) => {
 
   });
 
+  function setFormType(type){
+    formType = type;
+    document.getElementById('graphForm').innerHTML = type;
+  }
   return (
     <div className='graph-setting'>
         {children}
@@ -32,9 +37,9 @@ const GraphSetting = ({ children }) => {
 
         <div className={`dropdown-menu ${open? 'active' : 'inactive'}`} >
           <ul>
-            <DropdownItem text = {"Tackles"} onClick={() => document.getElementById('graphFrom').innerHTML = 'Tackles'}/>
-            <DropdownItem text = {"Shots"} onClick={() => document.getElementById('graphFrom').innerHTML = 'Shots'}/>
-            <DropdownItem text = {"Passes"} onClick={() => document.getElementById('graphForm').innerHTML = 'Passes'}/>
+            <DropdownItem text = {"Tackles"} onClick={setFormType("Tackles")}/>
+            <DropdownItem text = {"Shots"} onClick={setFormType("Shots")}/>
+            <DropdownItem text = {"Passes"} onClick={setFormType("Passes")}/>
           </ul>
         </div>
       </div>
