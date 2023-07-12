@@ -37,9 +37,9 @@ const GraphSetting = ({ children }) => {
 
         <div className={`dropdown-menu ${open? 'active' : 'inactive'}`} >
           <ul>
-            <DropdownItem text = {"Tackles"} onClick={setFormType("Tackles")}/>
-            <DropdownItem text = {"Shots"} onClick={setFormType("Shots")}/>
-            <DropdownItem text = {"Passes"} onClick={setFormType("Passes")}/>
+            <DropdownItem text = {"Tackles"} onClick={() => {setFormType("Tackles")}}/>
+            <DropdownItem text = {"Shots"} onClick={() => {setFormType("Shots")}}/>
+            <DropdownItem text = {"Passes"} onClick={() => {setFormType("Passes")}}/>
           </ul>
         </div>
       </div>
