@@ -101,21 +101,3 @@ h3 span{
   opacity: 1;
   cursor: pointer;
 }
-
-.dropdownItem{
-  display: flex;
-  margin: 10px auto;
-}
-
-.dropdownItem img{
-  max-width: 20px;
-  margin-right: 10px;
-  opacity: 0.5;
-  transition: var(--speed);
-}
-
-.dropdownItem a{
-  max-width: 100px;
-  margin-left: 10px;
-  transition: var(--speed);
-}

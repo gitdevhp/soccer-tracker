@@ -30,15 +30,14 @@ const GraphSetting = ({ children }) => {
         <div className='menu-trigger' onClick={() => { setOpen(!open) }}>
           <button id='graphForm'>
             {buttonText}
-            {console.log(buttonText)} 
           </button>
         </div>
 
         <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`} >
-          <ul>
-            <DropdownItem text={"Tackles"} onClick={() => setButtonText("Tackles")} />
-            <DropdownItem text={"Shots"} onClick={() => setButtonText("Shots")} />
-            <DropdownItem text={"Passes"} onClick={() => setButtonText("Passes")} />
+          <ul className='dropdownList'>
+            <button onClick={() => {setButtonText("Tackles"); setOpen(!open)}}> Tackles </button>
+            <button onClick={() => {setButtonText("Shots"); setOpen(!open)}}> Shots </button>
+            <button onClick={() => {setButtonText("Passes");setOpen(!open)}}> Passes </button>
           </ul>
         </div>
       </div>
@@ -46,14 +45,14 @@ const GraphSetting = ({ children }) => {
   );
 }
 
-function DropdownItem(props) {
+/*function DropdownItem(props) {
   return (
     <li className='dropdownItem'>
       <img src={props.img}></img>
       <a> {props.text} </a>
     </li>
   );
-}
+}*/
 
 
 export default GraphSetting;
