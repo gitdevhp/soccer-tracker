@@ -55,4 +55,14 @@
 #user-bar {
   width: 100vw;
   height: 10vh;
+  display: flex;
+  position: absolute;
+  justify-content: space-evenly;
+}
+
+#flexGraph {
+  display: flex;
+  flex-direction: column;
+  width: 40vw;
+  height: fit-content;
 }

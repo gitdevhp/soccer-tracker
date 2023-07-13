@@ -1,26 +1,26 @@
-import React, { useRef } from "react";
+import React from "react";
 import GraphSetting from "../components/GraphSetting";
 import Layout from "../components/Layout";
 import formType from "../components/GraphSetting";
 
 function LocalStorage() {
-    const data = useRef();
 
     const LocalSettings = {
-        graph1: null,
-        graph2: null,
-        graph3: null,
-        graph4: null,
+        "graphs": [
+            {
+                "id": 1,
+                "data": "none",
+                "format": "none",
+            },
+        ]
     }
 
-    const setGraph = (graphID, data, format) => {
-        const graphSet = {
-            data: data,
-            format: format,
-        }
-        LocalSettings[ graphID ] = graphSet; //or is it LocalSettings.graphID?
+    const setGraph = (ID, data, format) => {
+        LocalSettings.graphs[ID].data = data; //or is it LocalSettings.graphID?
+        LocalSettings.graphs[ID].format = format;
+        localStorage.setItem('preset', JSON.stringify({ ...LocalSettings }));
     }
-    localStorage.setItem('GraphSettings', JSON.stringify({...LocalSettings}));
+
     return (
         <>
             <Layout className="settin" >
@@ -28,10 +28,11 @@ function LocalStorage() {
                 <GraphSetting>
 
                 </GraphSetting>
-                <button className="addGraph" onClick={() => document.getElementsByClassName('settin').appendChild(<GraphSetting></GraphSetting>)}>Add New Graph</button>
-                <button className="save" onClick={() => setGraph(1,formType)}>Save</button> {/*change 1st parameter to graph # must be fixed*/}
+                <button className="addGraph" onClick={() => { document.getElementsByClassName('settin').appendChild(<GraphSetting></GraphSetting>) }}>Add New Graph</button>
+                <button className="save" onClick={() => setGraph(0, formType)}>Save</button> {/*change 1st parameter to graph # must be fixed*/}
             </Layout>
         </>
     );
 }
+
 export default LocalStorage;

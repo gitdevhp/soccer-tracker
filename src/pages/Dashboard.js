@@ -4,24 +4,30 @@ import { Link } from 'react-router-dom';
 
 function Dashboard() {
     const [hasDataGot, setHasDataGot] = useState(false); //use to check if data has loaded
-    const gridCount = () => {
-        if (localStorage.getItem("gridReq") !== null) { //gridReq is a setting by the user to show amount of grids, not made yet
-            return JSON.parse(localStorage.getItem("gridReq"));
+    const snagGridSetting = () => {
+        if (localStorage.getItem("preset") !== null) { //gridReq is a setting by the user to show amount of grids, not made yet
+            return JSON.parse(localStorage.getItem("preset"));
         }
     };
     const makeGrids = () => {
-        const grids = { gridCount };
-        if (grids > 0) {
+        const grids = { snagGridSetting };
+        if (grids !== 'basePreset'){
+            return <h2>No Graph Set Yet, Visit Settings to Customize</h2>
+        }
+        else if (grids !== null) {
             var indents = [];
-            for (var i = 0; i < grids; i++) {
-                indents.push(<div className='graph-${i} flexGraph' key={i}></div>);
+            for (var i = 0; i < grids.graphs.length; i++) {
+                indents.push(<div className='graph-${i} flexGraph' key={i}>
+                    <p>{grids.graphs[i].id}</p>
+                    <p>{grids.graphs[i].data}</p>
+                    <p>{grids.graphs[i].format}</p>
+                </div>);
             }
             return indents;
         } else {
             return (
                 <div id="no-grids">
                     <h1>No Grids Requested</h1>
-                    <p>You have not requested any grids yet, go to settings and customize</p>
                 </div>
             )
         }
@@ -30,7 +36,7 @@ function Dashboard() {
         <>
             <Layout>
                 <div id="data-flex">
-                    {makeGrids}
+                    {makeGrids()}
                 </div>
                 <div id="user-bar">
                     <p id='name'>Hello, User!</p> <p className="text-center">Need to Adjust? <Link to="/settings">Settings</Link></p> <p id='edition'>0.0.1</p>
