@@ -32,13 +32,14 @@ const GraphSetting = ({ children }) => {
             {buttonText}
           </button>
         </div>
-
-        <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`} >
-          <ul className='dropdownList'>
-            <button onClick={() => {setButtonText("Tackles"); setOpen(!open)}}> Tackles </button>
-            <button onClick={() => {setButtonText("Shots"); setOpen(!open)}}> Shots </button>
-            <button onClick={() => {setButtonText("Passes");setOpen(!open)}}> Passes </button>
-          </ul>
+        <div className='optionHolder'>
+          <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`} >
+            <ul className='dropdownList'>
+              <button onClick={() => { setButtonText("Tackles"); setOpen(!open) }}> Tackles </button>
+              <button onClick={() => { setButtonText("Shots"); setOpen(!open) }}> Shots </button>
+              <button onClick={() => { setButtonText("Passes"); setOpen(!open) }}> Passes </button>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

@@ -3,6 +3,8 @@ import GraphSetting from "../components/GraphSetting";
 import Layout from "../components/Layout";
 import formType from "../components/GraphSetting";
 
+export var graphCount = 1;
+
 function LocalStorage() {
 
     const LocalSettings = {
@@ -21,14 +23,27 @@ function LocalStorage() {
         localStorage.setItem('preset', JSON.stringify({ ...LocalSettings }));
     }
 
-    return (
-        <>
-            <Layout className="settin" >
-                <h3>Graph Settings</h3>
-                <GraphSetting>
+    const addGraphSetting = () => {
+        graphCount++;
+        return (
+            <>
+                <GraphSetting data-id={graphCount}>
 
                 </GraphSetting>
-                <button className="addGraph" onClick={() => { document.getElementsByClassName('settin').appendChild(<GraphSetting></GraphSetting>) }}>Add New Graph</button>
+            </>
+        )
+    }
+
+    return (
+        <>
+            <Layout>
+                <h3>Graph Settings</h3>
+                <div className='graphPresetHolder'>
+                    <GraphSetting data-id='1'>
+
+                    </GraphSetting>
+                </div>
+                <button className="addGraph" onClick={() => { addGraphSetting() }}>Add New Graph</button>
                 <button className="save" onClick={() => setGraph(0, formType)}>Save</button> {/*change 1st parameter to graph # must be fixed*/}
             </Layout>
         </>
