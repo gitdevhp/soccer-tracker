@@ -1,45 +1,44 @@
-import React, {useState, useEffect, useRef} from 'react';
-export var formType = 'none';
+import React, { useState, useEffect, useRef } from 'react';
 
 const GraphSetting = ({ children }) => {
-    const [open, setOpen] = useState(false);
-    
-    let menuRef = useRef();
+  const [open, setOpen] = useState(false);
+  const [buttonText, setButtonText] = useState('No Graph Selected');
+
+  let menuRef = useRef();
 
   useEffect(() => {
-    let handler = (e)=>{
-      if(!menuRef.current.contains(e.target)){
+    let handler = (e) => {
+      if (!menuRef.current.contains(e.target)) {
         setOpen(false);
         console.log(menuRef.current);
-      }      
+      }
     };
 
     document.addEventListener("mousedown", handler);
-    
 
-    return() =>{
+
+    return () => {
       document.removeEventListener("mousedown", handler);
     }
 
   });
 
-  function setFormType(type){
-    formType = type;
-    document.getElementById('graphForm').innerHTML = type;
-  }
   return (
     <div className='graph-setting'>
-        {children}
+      {children}
       <div className='menu-container' ref={menuRef}>
-        <div className='menu-trigger' onClick={()=>{setOpen(!open)}}>
-          <button id='graphForm'> No Graph Selected </button>
+        <div className='menu-trigger' onClick={() => { setOpen(!open) }}>
+          <button id='graphForm'>
+            {buttonText}
+            {console.log(buttonText)} 
+          </button>
         </div>
 
-        <div className={`dropdown-menu ${open? 'active' : 'inactive'}`} >
+        <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`} >
           <ul>
-            <DropdownItem text = {"Tackles"} onClick={() => {setFormType("Tackles")}}/>
-            <DropdownItem text = {"Shots"} onClick={() => {setFormType("Shots")}}/>
-            <DropdownItem text = {"Passes"} onClick={() => {setFormType("Passes")}}/>
+            <DropdownItem text={"Tackles"} onClick={() => setButtonText("Tackles")} />
+            <DropdownItem text={"Shots"} onClick={() => setButtonText("Shots")} />
+            <DropdownItem text={"Passes"} onClick={() => setButtonText("Passes")} />
           </ul>
         </div>
       </div>
@@ -47,9 +46,9 @@ const GraphSetting = ({ children }) => {
   );
 }
 
-function DropdownItem(props){
-  return(
-    <li className = 'dropdownItem'>
+function DropdownItem(props) {
+  return (
+    <li className='dropdownItem'>
       <img src={props.img}></img>
       <a> {props.text} </a>
     </li>
