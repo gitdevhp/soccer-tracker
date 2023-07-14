@@ -56,8 +56,11 @@
   width: 100vw;
   height: 10vh;
   display: flex;
-  position: absolute;
+  position: fixed;
   justify-content: space-evenly;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 #flexGraph {
