@@ -1,17 +1,52 @@
 import React, {useState} from "react";
 import GraphSetting from "../components/GraphSetting";
 import Layout from "../components/Layout";
-import formType from "../components/GraphSetting";
 
-export var graphCount = 1;
+export var graphCount = 0;
 
 function LocalStorage() {
 
-    const [ide, setide] = useState(0);
-    var [dataTemp, setDataTemp] = useState('none');
-    var [formatTemp, setFormatTemp] = useState('none');
+    const [graphData, setGraphData] = useState([
+        { id: 0, data: "Tackles", format: "Bar" },
+    ]);
+    const [graphCount, setGraphCount] = useState(1);
 
-    let LocalSettings = {
+    const addGraph = () => {
+        setGraphCount(graphCount + 1);
+        const newGraph = { id: graphCount, data: "Tackles", format: "Bar" };
+        setGraphData([...graphData, newGraph]);
+    };
+
+    const removeGraph = (id) => {
+        setGraphData(graphData.filter((graph) => graph.id !== id));
+        setGraphCount(graphCount - 1);
+    };
+
+    const updateGraph = (id, data, format) => {
+        const updatedGraph = { id, data, format };
+        const index = graphData.findIndex((graph) => graph.id === id); //need help fixing, temp fix but whenever graph setting updated it creates new setting
+        if (index === -1) {
+            setGraphData([...graphData, updatedGraph]);
+        } else {    
+            const newGraphData = [...graphData];
+            newGraphData[index] = updatedGraph;
+            setGraphData(newGraphData);
+        }
+    };
+
+    const saveGraphs = () => {
+        localStorage.setItem('graphData', JSON.stringify(graphData));
+    };
+
+    const loadGraphs = () => {
+        const data = JSON.parse(localStorage.getItem('graphData'));
+        if (data) {
+            setGraphData(data);
+            setGraphCount(data.length + 1);
+        }
+    };
+
+    /*let LocalSettings = {
         "graphs": [
             {
                 "id": {ide},
@@ -45,19 +80,35 @@ function LocalStorage() {
                 </GraphSetting>
             </>
         )
-    }
+    }*/
 
     return (
         <>
             <Layout>
                 <h3>Graph Settings</h3>
-                <div className='graphPresetHolder'>
-                    <GraphSetting className='GraphSet' data-id='1'>
-
-                    </GraphSetting>
-                </div>
-                <button className="addGraph" onClick={() => { addGraphSetting() }}>Add New Graph</button>
-                <button className="save" onClick={() => storeGraphs()}>Save</button> {/*change 1st parameter to graph # must be fixed*/}
+                {graphData.map((graph) => (
+                    <GraphSetting 
+                    key={graph.id} 
+                    id={graph.id}
+                    data={graph.data}
+                    format={graph.format}
+                    updateGraph={updateGraph}
+                    removeGraph={removeGraph}
+                    />
+                 ))}
+                 {/*
+                 {[...Array(graphCount)].map((_, index) => (
+                 <GraphSetting
+                    key={index}
+                    id={index}
+                    updateGraph={updateGraph}
+                    removeGraph={removeGraph}
+                 />
+                 ))}
+                 */}
+                <button className="addGraph" onClick={ addGraph }>Add New Graph</button>
+                <button className="saveGraphs" onClick={ saveGraphs }>Save Graphs</button>
+                <button className="Load" onClick={ loadGraphs }>Load</button> {/*change 1st parameter to graph # must be fixed*/}
             </Layout>
         </>
     );
