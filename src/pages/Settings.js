@@ -3,17 +3,18 @@ import GraphSetting from "../components/GraphSetting";
 import Layout from "../components/Layout";
 
 function LocalStorage() {
-
-    useEffect(() => {
-        if (localStorage.getItem('graphData')===null||localStorage.getItem('graphData')===undefined||localStorage.getItem('graphData')==='undefined'){
-             localStorage.setItem('graphData', JSON.stringify([{ id: graphCount, data: "Tackles", format: "Bar" }]));
-        } else{
-        loadGraphs();
-        }
-    }, []);
-
+    
     const [graphCount, setGraphCount] = useState(1);
     const [graphData, setGraphData] = useState([]);
+
+
+    useEffect(() => {
+        if (localStorage.getItem('graphData') === null || localStorage.getItem('graphData') === undefined || localStorage.getItem('graphData') === 'undefined') {
+            localStorage.setItem('graphData', JSON.stringify([{ id: graphCount, data: "Tackles", format: "Bar" }]));
+        } else {
+            loadGraphs();
+        }
+    }, []);
 
     const addGraph = () => {
         setGraphCount(graphCount + 1);
@@ -39,8 +40,8 @@ function LocalStorage() {
             setGraphData([...graphData, updatedGraph]);
         } else {
             const newGraphData = [...graphData];
-            newGraphData[index] = updatedGraph;
-            setGraphData(newGraphData);
+                newGraphData[index] = updatedGraph;
+                setGraphData(newGraphData);
         }
     };
 
