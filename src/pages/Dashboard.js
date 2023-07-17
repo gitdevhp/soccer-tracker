@@ -10,7 +10,8 @@ function Dashboard() {
         setGraphData(data);
     }, []);
 
-    const makeGrids = ({ graphData }) => {
+    const makeGrids = () => {
+        console.log(graphData);
         return (
             <div>
                 {graphData.map((graph) => (
@@ -27,7 +28,7 @@ function Dashboard() {
         <>
             <Layout>
                 <div id="data-flex">
-                    {makeGrids( graphData )}
+                    {makeGrids()}
                 </div>
                 <div id="user-bar">
                     <p id='name'>Hello, User!</p> <p className="text-center">Need to Adjust? <Link to="/settings">Settings</Link></p> <p id='edition'>0.0.1</p>

@@ -72,8 +72,8 @@ const GraphSetting = ({ id, data, format, updateGraph, removeGraph }) => {
             </ul>
           </div>
         </div>
+        <button onClick={handleRemove}>Remove Graph</button>
       </div>
-      <button onClick={handleRemove}>Remove Graph</button>
     </div>
   );
 };

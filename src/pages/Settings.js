@@ -3,14 +3,20 @@ import GraphSetting from "../components/GraphSetting";
 import Layout from "../components/Layout";
 
 function LocalStorage() {
-    
+
     const [graphCount, setGraphCount] = useState(1);
     const [graphData, setGraphData] = useState([]);
 
 
     useEffect(() => {
-        if (localStorage.getItem('graphData') === null || localStorage.getItem('graphData') === undefined || localStorage.getItem('graphData') === 'undefined') {
-            localStorage.setItem('graphData', JSON.stringify([{ id: graphCount, data: "Tackles", format: "Bar" }]));
+        if (
+            localStorage.getItem('graphData') === null ||
+            localStorage.getItem('graphData') === undefined ||
+            localStorage.getItem('graphData') === 'undefined'
+        ) {
+            localStorage.setItem(
+                'graphData',
+                JSON.stringify([{ id: graphCount, data: "Tackles", format: "Bar" }]));
         } else {
             loadGraphs();
         }
@@ -19,18 +25,23 @@ function LocalStorage() {
     const addGraph = () => {
         setGraphCount(graphCount + 1);
         const newGraph = { id: graphCount, data: "Tackles", format: "Bar" };
-        setGraphData([...graphData, newGraph]);
+        setGraphData(prevGraphData => [...prevGraphData, newGraph]);
+        updateLocalStorage();
     };
 
     const removeGraph = (id) => {
-        const newGraphData = graphData.filter((graph) => graph.id !== id);
-        setGraphData(newGraphData);
-        setGraphCount(newGraphCount => newGraphCount - 1);
-        // Update the id numbers of the remaining graphs
-        newGraphData.forEach((graph, index) => {
-            graph.id = index;
-        });
-        localStorage.setItem('graphData', JSON.stringify(newGraphData));
+        const graphIndex = graphData.findIndex((graph) => graph.id === id);
+        if (graphIndex !== -1) {
+            const newGraphData = [...graphData];
+            newGraphData.splice(graphIndex, 1);
+            setGraphData(newGraphData);
+            setGraphCount(newGraphData.length);
+            newGraphData.forEach((graph, index) => {
+                graph.id = index;
+            });
+            
+            updateLocalStorage(newGraphData);
+        }
     };
 
     const updateGraph = (id, data, format) => {
@@ -40,9 +51,10 @@ function LocalStorage() {
             setGraphData([...graphData, updatedGraph]);
         } else {
             const newGraphData = [...graphData];
-                newGraphData[index] = updatedGraph;
-                setGraphData(newGraphData);
+            newGraphData[index] = updatedGraph;
+            setGraphData(newGraphData);
         }
+        updateLocalStorage();
     };
 
     const saveGraphs = () => {
@@ -57,6 +69,9 @@ function LocalStorage() {
         }
     };
 
+    const updateLocalStorage = () => {
+        localStorage.setItem('graphData', JSON.stringify(graphData));
+    };
     return (
         <>
             <Layout>
