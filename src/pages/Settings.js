@@ -10,12 +10,12 @@ function LocalStorage() {
 
     useEffect(() => {
         if (
-            localStorage.getItem('graphData') === null ||
-            localStorage.getItem('graphData') === undefined ||
-            localStorage.getItem('graphData') === 'undefined'
+            localStorage.getItem('graphPreset') === null ||
+            localStorage.getItem('graphPreset') === undefined ||
+            localStorage.getItem('graphPreset') === 'undefined'
         ) {
             localStorage.setItem(
-                'graphData',
+                'graphPreset',
                 JSON.stringify([{ id: graphCount, data: "Tackles", format: "Bar" }]));
         } else {
             loadGraphs();
@@ -23,7 +23,7 @@ function LocalStorage() {
     }, []);
 
     const addGraph = () => {
-        setGraphCount(graphCount + 1);
+        setGraphCount(graphCount => graphCount + 1);
         const newGraph = { id: graphCount, data: "Tackles", format: "Bar" };
         setGraphData(prevGraphData => [...prevGraphData, newGraph]);
         updateLocalStorage();

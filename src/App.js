@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Field from "./pages/Field"
 import Dashboard from "./pages/Dashboard"
 import Settings from "./pages/Settings"
+import Summary from "./pages/Summary"
 
 export const usePreset = () => {
   const [preset, setPreset] = useState('');
@@ -28,6 +29,7 @@ function App() {
           <Route exact path="/"  element={<Dashboard/>} />
           <Route path="/field"  element={<Field/>} />
           <Route path="/settings"  element={<Settings/>} />
+          <Route path='/summary' element={<Summary/>} />
       </Routes>
     </Router>
   );
