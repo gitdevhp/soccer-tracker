@@ -40,7 +40,7 @@ function LocalStorage() {
                 graph.id = index;
             });
             
-            updateLocalStorage(newGraphData);
+            updateLocalStorage();
         }
     };
 
@@ -62,15 +62,16 @@ function LocalStorage() {
     };
 
     const loadGraphs = () => {
-        const data = JSON.parse(localStorage.getItem('graphPreset'));
+        const data = localStorage.getItem('graphPreset');
         if (data) {
-            setGraphData(data);
-            setGraphCount(data.length + 1);
+            const parsedData = JSON.parse(data);
+            setGraphData(parsedData);
+            setGraphCount(parsedData.length + 1);
         }
     };
 
     const updateLocalStorage = () => {
-        localStorage.setItem('graphData', JSON.stringify(graphData));
+        localStorage.setItem('graphPreset', JSON.stringify(graphData));
     };
     return (
         <>

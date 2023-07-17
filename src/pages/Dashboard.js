@@ -6,7 +6,7 @@ function Dashboard() {
     const [graphData, setGraphData] = useState([]);
 
     useEffect(() => {
-        const data = JSON.parse(localStorage.getItem('graphData'));
+        const data = JSON.parse(localStorage.getItem('graphPreset'));
         setGraphData(data);
     }, []);
 
