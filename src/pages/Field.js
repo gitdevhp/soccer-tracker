@@ -1,14 +1,21 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 
 function Field() {
-    const Ref = useRef(null);
-    const [isRunning, setIsRunning] = useState(false);
+    const [interv, setInterv] = useState();
+    const [timerStatus, setTimerStatus] = useState(0);
+    // 0 = not started
+    // 1 = running
+    // 2 = paused
+
     const [time, setTime] = useState("00:00");
     const [half, setHalf] = useState(1);
 
     const [gameStats, setGameStats] = useState([]);
+
+    const [sec, setSec] = useState(0);
+    const [min, setMin] = useState(0);
 
     const [Ypasses, setYpasses] = useState(0);
     const [Npasses, setNpasses] = useState(0);
@@ -27,31 +34,45 @@ function Field() {
     }
 
     useEffect(() => {
-        setTime("00:00");
-        setHalf(1);
-
+        resetTimer();
         resetStats();
     }, []);
 
-    useEffect(() => {
-        let seconds = Math.floor(time / 1000);
-        let minutes = Math.floor(seconds / 60);
-        seconds = seconds % 60;
-        let displaySeconds = seconds < 10 ? `0${seconds}` : seconds;
-        let displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
-        setTime(`${displayMinutes}:${displaySeconds}`);
-    }, [time]);
+    // time updates
 
     const startTimer = () => {
-        setIsRunning(true);
-        const startTime = Date.now() - time;
-        const interval = setInterval(() => {
-            setTime(Date.now() - startTime);
-        }, 1000);
-        Ref.current = interval;
-    };
+        runTimer();
+        setTimerStatus(1);
+        setInterv(setInterval(runTimer, 1000));
+    }
 
-    const halfEnd = () => {
+    const resumeTimer = () => startTimer();
+
+    const stopTimer = () => {
+        clearInterval(interv);
+        setTimerStatus(2);
+    }
+
+    const resetTimer = () => {
+        clearInterval(interv);
+        setTimerStatus(0);
+        setTime("00:00");
+        setSec(0);
+        setMin(0);
+        setHalf(1);
+    }
+
+    var updatedSec = sec, updatedMin = min;
+    const runTimer = () => {
+        updatedSec++;
+        if (updatedSec === 60) {
+            updatedMin++;
+            updatedSec = 0;
+        }
+        return setTime(`${updatedMin.toString().padStart(2, '0')} : ${updatedSec.toString().padStart(2, '0')}`);
+    }
+
+    const halfEnd = async () => {
         saveHalf(half);
         setHalf(half => half + 1);
     };
@@ -84,21 +105,23 @@ function Field() {
         <>
             <Layout>
                 <h3>{time}</h3>
-                {!isRunning ? (
+                {timerStatus === 0 && (
                     <button onClick={startTimer}>Start</button>
-                ) : (
-                    <button onClick={() => { clearInterval(Ref.current); setIsRunning(false) }}>Stop</button>
+                )} {timerStatus === 1 && (
+                    <>
+                        <button onClick={stopTimer}>Stop</button>
+                    </>
+                )} {timerStatus === 2 && (
+                    <>
+                        <button onClick={resumeTimer}>Resume</button>
+                    </>
                 )}
-                {half === 1 ? (
-                    <button onClick={halfEnd}>Half</button>
-                ) : (
+                {half === 1 && (
+                    <button onClick={halfEnd}>Half End</button>
+                )} {half === 2 && (
                     <button onClick={halfEnd}><Link to="/summary">End Game</Link></button>
                 )}
-                {isRunning ? (
-                    <button onClick={addPass}>Pass</button>
-                ) : (
-                    null
-                )}
+                <button onClick={addPass}>Pass</button>
             </Layout>
         </>
     )
