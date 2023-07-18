@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 
 function Field() {
@@ -33,26 +33,23 @@ function Field() {
         resetStats();
     }, []);
 
+    useEffect(() => {
+        let seconds = Math.floor(time / 1000);
+        let minutes = Math.floor(seconds / 60);
+        seconds = seconds % 60;
+        let displaySeconds = seconds < 10 ? `0${seconds}` : seconds;
+        let displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
+        setTime(`${displayMinutes}:${displaySeconds}`);
+    }, [time]);
+
     const startTimer = () => {
         setIsRunning(true);
-        let seconds = 0;
-        let minutes = 0;
-        Ref.current = setInterval(() => {
-            seconds++;
-            if (seconds === 60) {
-                seconds = 0;
-                minutes++;
-            }
-            setTime(`${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`);
+        const startTime = Date.now() - time;
+        const interval = setInterval(() => {
+            setTime(Date.now() - startTime);
         }, 1000);
+        Ref.current = interval;
     };
-
-    const stats = Object.freeze({
-        time: '',
-        Passes: [{ Complete: 0, Miss: 0 }],
-        Shots: [{ Complete: 0, Miss: 0 }],
-        Tackles: 0,
-    });
 
     const halfEnd = () => {
         saveHalf(half);
@@ -68,11 +65,11 @@ function Field() {
         }
 
         if (half === 1) {
-             const h1 = { ...stats, ...halfStats };
+            const h1 = { ...halfStats };
             setGameStats([h1, gameStats[1]]);
             resetStats();
         } else {
-            const h2 = { ...stats, ...halfStats};
+            const h2 = { ...halfStats };
             setGameStats([gameStats[0], h2]);
             resetStats();
             localStorage.setItem('saveGame', JSON.stringify(gameStats));
@@ -97,9 +94,14 @@ function Field() {
                 ) : (
                     <button onClick={halfEnd}><Link to="/summary">End Game</Link></button>
                 )}
-                <button onClick={addPass}>Pass</button>
+                {isRunning ? (
+                    <button onClick={addPass}>Pass</button>
+                ) : (
+                    null
+                )}
             </Layout>
         </>
     )
 };
+
 export default Field;
