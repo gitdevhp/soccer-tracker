@@ -69,3 +69,23 @@
   width: 40vw;
   height: fit-content;
 }
+
+.holdHalves {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100vw;
+  height: 100vh;
+}
+
+.hdis {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 45vw;
+  height: 100vh;
+  padding: 5vw;
+
+  border: 2px solid black;
+  border-radius: 20px;
+}
