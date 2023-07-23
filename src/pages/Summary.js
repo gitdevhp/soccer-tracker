@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 
@@ -13,12 +13,21 @@ function Summary() {
                     <div className="hdis">
                         <h3>Half 1</h3>
                         <h4>Time: {gameData[0].time}</h4>
-                        <h5>Passes: {gameData[0].Passes[0].Complete} - {gameData[0].Passes[0].Miss}</h5>
-                        
+                        <h5>
+                            Passes:{" "}
+                            <span className="Complete">{gameData[0].Passes[0].Complete}</span> -{" "}
+                            <span className="Miss">{gameData[0].Passes[0].Miss}</span>
+                        </h5>
+
                     </div>
                     <div className="hdis">
                         <h3>Half 2</h3>
                         <h4>Time: {gameData[1].time}</h4>
+                        <h5>
+                            Passes:{" "}
+                            <span className="Complete">{gameData[1].Passes[0].Complete}</span> -{" "}
+                            <span className="Miss">{gameData[1].Passes[0].Miss}</span>
+                        </h5>
 
                     </div>
                 </div>

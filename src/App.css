@@ -63,6 +63,14 @@
   right: 0;
 }
 
+.Complete {
+  color: #4CAF50;
+}
+
+.Miss {
+  color: #f44336;
+}
+
 #flexGraph {
   display: flex;
   flex-direction: column;
