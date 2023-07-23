@@ -12,17 +12,19 @@ function Dashboard() {
 
     const makeGrids = () => {
         console.log(graphData);
-        return (
-            <div>
-                {graphData.map((graph) => (
-                    <div key={graph.id}>
-                        <h3>Graph {graph.id + 1}</h3>
-                        <p>Data: {graph.data}</p>
-                        <p>Format: {graph.format}</p>
-                    </div>
-                ))}
-            </div>
-        );
+        if (graphData !== null) {
+            return (
+                <div>
+                    {graphData.map((graph) => (
+                        <div key={graph.id}>
+                            <h3>Graph {graph.id + 1}</h3>
+                            <p>Data: {graph.data}</p>
+                            <p>Format: {graph.format}</p>
+                        </div>
+                    ))}
+                </div>
+            );
+        }
     };
 
     return (

@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 
 function Field() {
+
+    let adjTime = "00:10";
+
     const [interv, setInterv] = useState();
     const [timerStatus, setTimerStatus] = useState(0);
     // 0 = not started
@@ -11,6 +14,9 @@ function Field() {
 
     const [time, setTime] = useState("00:00");
     const [half, setHalf] = useState(1);
+
+    const [holdMin, setHoldMin] = useState(0);
+    const [holdSec, setHoldSec] = useState(0);
 
     const [sec, setSec] = useState(0);
     const [min, setMin] = useState(0);
@@ -57,9 +63,11 @@ function Field() {
         setSec(0);
         setMin(0);
         setHalf(1);
+        console.log("reset Timer");
     }
 
     var updatedSec = sec, updatedMin = min;
+    
     const runTimer = () => {
         updatedSec++;
         if (updatedSec === 60) {
@@ -67,6 +75,8 @@ function Field() {
             updatedSec = 0;
         }
         setTime(`${updatedMin.toString().padStart(2, '0')}:${updatedSec.toString().padStart(2, '0')}`);
+        setHoldMin(updatedMin);
+        setHoldSec(updatedSec);
     }
 
     const halfEnd = async () => {
@@ -75,21 +85,27 @@ function Field() {
     };
 
     const saveHalf = (half) => {
-        const halfStats = {
-            time: time,
-            Passes: [{ Complete: Ypasses, Miss: Npasses }],
-            Shots: [{ Complete: Yshots, Miss: Nshots }],
-            Tackles: tackles,
-        } 
         if (half === 1) {
-            const h1 = { ...halfStats };
+            const half1Stats = {
+                time: time,
+                Passes: [{ Complete: Ypasses, Miss: Npasses }],
+                Shots: [{ Complete: Yshots, Miss: Nshots }],
+                Tackles: tackles,
+            }
+            const h1 = { ...half1Stats };
             localStorage.setItem('saveGame', JSON.stringify([h1]));
         } else {
-            const adjTimeMin = updatedMin - parseInt(JSON.parse(localStorage.getItem('saveGame'))[0].time.split(':')[0]);
-            console.log(JSON.parse(localStorage.getItem('saveGame'))[0].time.split(':')[1]);
-            const adjTimeSec = updatedSec - parseInt(JSON.parse(localStorage.getItem('saveGame'))[0].time.split(':')[1]);
-            const adjTime = `${adjTimeMin.toString().padStart(2, '0')}:${adjTimeSec.toString().padStart(2, '0')}`;
-            setTime(adjTime);
+            const adjTimeMin = holdMin - parseInt(JSON.parse(localStorage.getItem('saveGame'))[0].time.split(':')[0]);
+            const adjTimeSec = holdSec - parseInt(JSON.parse(localStorage.getItem('saveGame'))[0].time.split(':')[1]);
+            console.log(adjTimeMin, adjTimeSec);
+            adjTime = `${adjTimeMin.toString().padStart(2, '0')}:${adjTimeSec.toString().padStart(2, '0')}`;
+            console.log(adjTime);
+            const halfStats = {
+                time: adjTime,
+                Passes: [{ Complete: Ypasses, Miss: Npasses }],
+                Shots: [{ Complete: Yshots, Miss: Nshots }],
+                Tackles: tackles,
+            } 
             const h2 = { ...halfStats };
             var h1Stats = JSON.parse(localStorage.getItem('saveGame'));
             localStorage.setItem('saveGame', JSON.stringify(h1Stats.concat(h2)));
