@@ -18,7 +18,14 @@ function Summary() {
                             <span className="Complete">{gameData[0].Passes[0].Complete}</span> -{" "}
                             <span className="Miss">{gameData[0].Passes[0].Miss}</span>
                         </h5>
-
+                        <h5>
+                            Shots:{" "}
+                            <span className="Complete">{gameData[0].Shots[0].Complete}</span> -{" "}
+                            <span className="Miss">{gameData[0].Shots[0].Miss}</span>
+                        </h5>
+                        <h5>
+                            Tackles: {gameData[0].Tackles}
+                        </h5>
                     </div>
                     <div className="hdis">
                         <h3>Half 2</h3>
@@ -28,7 +35,14 @@ function Summary() {
                             <span className="Complete">{gameData[1].Passes[0].Complete}</span> -{" "}
                             <span className="Miss">{gameData[1].Passes[0].Miss}</span>
                         </h5>
-
+                        <h5>
+                            Shots:{" "}
+                            <span className="Complete">{gameData[1].Shots[0].Complete}</span> -{" "}
+                            <span className="Miss">{gameData[1].Shots[0].Miss}</span>
+                        </h5>
+                        <h5>
+                            Tackles: {gameData[1].Tackles}
+                        </h5>
                     </div>
                 </div>
                 <Link to="/">Home</Link>
