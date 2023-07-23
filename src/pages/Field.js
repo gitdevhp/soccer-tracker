@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, json } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 
 function Field() {
@@ -39,7 +39,6 @@ function Field() {
     // time updates
 
     const startTimer = () => {
-        runTimer();
         setTimerStatus(1);
         setInterv(setInterval(runTimer, 1000));
     }
@@ -67,7 +66,7 @@ function Field() {
             updatedMin++;
             updatedSec = 0;
         }
-        return setTime(`${updatedMin.toString().padStart(2, '0')} : ${updatedSec.toString().padStart(2, '0')}`);
+        setTime(`${updatedMin.toString().padStart(2, '0')}:${updatedSec.toString().padStart(2, '0')}`);
     }
 
     const halfEnd = async () => {
@@ -81,15 +80,21 @@ function Field() {
             Passes: [{ Complete: Ypasses, Miss: Npasses }],
             Shots: [{ Complete: Yshots, Miss: Nshots }],
             Tackles: tackles,
-        }
-
+        } 
         if (half === 1) {
             const h1 = { ...halfStats };
             localStorage.setItem('saveGame', JSON.stringify([h1]));
         } else {
+            const adjTimeMin = updatedMin - parseInt(JSON.parse(localStorage.getItem('saveGame'))[0].time.split(':')[0]);
+            console.log(JSON.parse(localStorage.getItem('saveGame'))[0].time.split(':')[1]);
+            const adjTimeSec = updatedSec - parseInt(JSON.parse(localStorage.getItem('saveGame'))[0].time.split(':')[1]);
+            const adjTime = `${adjTimeMin.toString().padStart(2, '0')}:${adjTimeSec.toString().padStart(2, '0')}`;
+            setTime(adjTime);
+            setTimeout(() => {
             const h2 = { ...halfStats };
-            var h1Stats = localStorage.getItem('saveGame');
+            var h1Stats = JSON.parse(localStorage.getItem('saveGame'));
             localStorage.setItem('saveGame', JSON.stringify(h1Stats.concat(h2)));
+            }, 1000);
         }
         resetStats();
     };
@@ -113,7 +118,7 @@ function Field() {
                         <button onClick={resumeTimer}>Resume</button>
                     </>
                 )}
-                {half === 1 && timerStatus!==0 && (
+                {half === 1 && timerStatus !== 0 && (
                     <button onClick={halfEnd}>Half End</button>
                 )} {half === 2 && (
                     <button onClick={halfEnd}><Link to="/summary">End Game</Link></button>
