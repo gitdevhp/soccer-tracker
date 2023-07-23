@@ -90,11 +90,9 @@ function Field() {
             const adjTimeSec = updatedSec - parseInt(JSON.parse(localStorage.getItem('saveGame'))[0].time.split(':')[1]);
             const adjTime = `${adjTimeMin.toString().padStart(2, '0')}:${adjTimeSec.toString().padStart(2, '0')}`;
             setTime(adjTime);
-            setTimeout(() => {
             const h2 = { ...halfStats };
             var h1Stats = JSON.parse(localStorage.getItem('saveGame'));
             localStorage.setItem('saveGame', JSON.stringify(h1Stats.concat(h2)));
-            }, 1000);
         }
         resetStats();
     };
