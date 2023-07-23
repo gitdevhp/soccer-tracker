@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, json } from "react-router-dom";
 import Layout from "../components/Layout";
 
 function Field() {
@@ -11,8 +11,6 @@ function Field() {
 
     const [time, setTime] = useState("00:00");
     const [half, setHalf] = useState(1);
-
-    const [gameStats, setGameStats] = useState([]);
 
     const [sec, setSec] = useState(0);
     const [min, setMin] = useState(0);
@@ -87,14 +85,13 @@ function Field() {
 
         if (half === 1) {
             const h1 = { ...halfStats };
-            setGameStats([h1, gameStats[1]]);
-            resetStats();
+            localStorage.setItem('saveGame', JSON.stringify([h1]));
         } else {
             const h2 = { ...halfStats };
-            setGameStats([gameStats[0], h2]);
-            resetStats();
-            localStorage.setItem('saveGame', JSON.stringify(gameStats));
+            var h1Stats = localStorage.getItem('saveGame');
+            localStorage.setItem('saveGame', JSON.stringify(h1Stats.concat(h2)));
         }
+        resetStats();
     };
 
     const addPass = () => {
@@ -116,7 +113,7 @@ function Field() {
                         <button onClick={resumeTimer}>Resume</button>
                     </>
                 )}
-                {half === 1 && (
+                {half === 1 && timerStatus!==0 && (
                     <button onClick={halfEnd}>Half End</button>
                 )} {half === 2 && (
                     <button onClick={halfEnd}><Link to="/summary">End Game</Link></button>
