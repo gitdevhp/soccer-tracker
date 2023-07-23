@@ -13,6 +13,7 @@ function Field() {
     // 2 = paused
 
     const [time, setTime] = useState("00:00");
+    const [score, setScore] = useState([0, 0]);
     const [half, setHalf] = useState(1);
 
     const [holdMin, setHoldMin] = useState(0);
@@ -99,14 +100,17 @@ function Field() {
             const adjTimeSec = holdSec - parseInt(JSON.parse(localStorage.getItem('saveGame'))[0].time.split(':')[1]);
             console.log(adjTimeMin, adjTimeSec);
             adjTime = `${adjTimeMin.toString().padStart(2, '0')}:${adjTimeSec.toString().padStart(2, '0')}`;
-            console.log(adjTime);
             const halfStats = {
                 time: adjTime,
                 Passes: [{ Complete: Ypasses, Miss: Npasses }],
                 Shots: [{ Complete: Yshots, Miss: Nshots }],
                 Tackles: tackles,
-            } 
-            const h2 = { ...halfStats };
+            }
+            const scorePP = {
+                score: `${score[0]} - ${score[1]}`,
+            }
+            
+            const h2 = { ...halfStats , ...scorePP };
             var h1Stats = JSON.parse(localStorage.getItem('saveGame'));
             localStorage.setItem('saveGame', JSON.stringify(h1Stats.concat(h2)));
         }
@@ -117,10 +121,20 @@ function Field() {
         setYpasses(ypasses => ypasses + 1);
     };
 
+    const addScore = () => {
+        setYShots(yshots => yshots + 1);
+        setScore([score[0] + 1, score[1]]);
+    }
+
+    const addEnemScore = () => {
+        setScore([score[0], score[1] + 1]);
+    }
+
     return (
         <>
             <Layout>
                 <h3>{time}</h3>
+                <h3>{score[0]} - {score[1]}</h3>
                 {timerStatus === 0 && (
                     <button onClick={startTimer}>Start</button>
                 )} {timerStatus === 1 && (
@@ -138,6 +152,8 @@ function Field() {
                     <button onClick={halfEnd}><Link to="/summary">End Game</Link></button>
                 )}
                 <button onClick={addPass}>Pass</button>
+                <button onClick={addScore}>Goal For</button>
+                <button onClick={addEnemScore}>Goal Against</button>
             </Layout>
         </>
     )
