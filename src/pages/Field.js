@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import FieldImg from "../img/field.png";
-import { click } from "@testing-library/user-event/dist/click";
 
 function Field() {
+    var click = 0;
 
     let adjTime = "00:10";
 
@@ -31,7 +31,6 @@ function Field() {
 
     const [mouseDown, setMouseDown] = useState([0, 0]);
     const [mouseUp, setMouseUp] = useState([0, 0]);
-    const [mouseClick, setMouseClick] = useState(0);
 
     //field dimensions relative to field image
     //subject to change
@@ -138,6 +137,7 @@ function Field() {
         setScore([score[0], score[1] + 1]);
     }
 
+    //Data tracking starts here SECTION 2
     // mouse events
 
     const handleMouseDown = (e) => {
@@ -149,16 +149,16 @@ function Field() {
         lineDrawn();
     }
 
-    var c = 0;
     const handleMouseClick = (e) => {
-        lookForClick();
-        c++;
+        setMouseUp(e.clientX, e.clientY);
+        setMouseDown(e.clientX, e.clientY);
+        click++;
+        checkClicks();
     }
 
-    const lookForClick = () => {
-        
-    }
-
+    //Algorithm for tracking and storing data
+    //This is where most change will happen in terms of updates to data Tracked
+    
     const lineDrawn = () => {
         if (mouseDown[0] !== mouseUp[0] && mouseDown[1] !== mouseUp[1]) {
             console.log("line drawn");
@@ -176,56 +176,51 @@ function Field() {
                 default:
                     typePass = "long";
             }
-            setDataForLine(typePass);
+            setDataForLine();
         } else {
-            handleMouseClick();
+            checkClicks('misc');
         }
     }
 
-    const setDataForLine = (typeLine) => {
-        let kickType;
-        let status;
-        let clickAMT;
+    const setDataForLine = () => {
         if (mouseUp[0] > goalAreaX[0] &&
             mouseUp[0] < goalAreaX[1] &&
             mouseUp[1] > goalAreaY[0] &&
             mouseUp[1] < goalAreaY[1]) {
-            kickType = 'shot';
-            setYShots(yshots => yshots + 1);
-        } //add more cases for different types of kicks below
-
-        clickAMT = window.addEventListener('click', searchForClick);
-
-        if (clickAMT === 1) {
-            status = 'miss';
+            checkClicks('shot');
         } else {
-            status = 'complete';
+            checkClicks('pass');
         }
-        const data = {
-            timeOfOccur: time,
-            type: kickType,
-            status: status,
-            typePass: typeLine,
-
-            x1: mouseDown[0],
-            y1: mouseDown[1],
-            x2: mouseUp[0],
-            y2: mouseUp[1],
-        }
-        var dataArr = JSON.parse(localStorage.getItem('gameDataTemp'));
-        dataArr.concat(data);
     }
 
-    const searchForClick = () => {
-        click++;
-        if (click === 2) {
-            window.removeEventListener('click', searchForClick);
-            return click;
-        }
+    const checkClicks = (t) => {
+        window.addEventListener('click', () => click++);
         setTimeout(() => {
-            window.removeEventListener('click', searchForClick);
-            return click;
-        }, 2000);
+            window.removeEventListener('click', () => click++);
+            switch (t) {
+                case 'pass':
+                    if (click === 1) {
+                        setNpasses(npasses => npasses + 1);
+                    } else {
+                        setYpasses(ypasses => ypasses + 1);
+                    }
+                    break;
+                case 'shot':
+                    if (click === 1) {
+                        setNShots(nshots => nshots + 1);
+                    } else {
+                        setYShots(yshots => yshots + 1);
+                    }
+                    break;
+                case 'misc':
+                    if (click === 1) {
+                        setTackles(tackles => tackles + 1);
+                    }
+                    break;
+                default:
+                    console.log("error clicks unassigned");
+            }
+        }, 1000);
     }
 
     return (
