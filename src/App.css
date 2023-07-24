@@ -104,3 +104,16 @@
   border: 2px solid black;
   border-radius: 20px;
 }
+
+.settingPNG {
+  width: auto;
+  height: 5vh;
+}
+
+.top-user-bar {
+  position: absolute;
+  display: flex;
+  justify-content: space-evenly;
+  height: 10vh;
+  width: 100vw;
+}
