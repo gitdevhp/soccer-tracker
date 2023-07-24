@@ -155,17 +155,17 @@ function Field() {
             var typePass;
             switch (lineLength) {
                 case lineLength < 10:
-                    typePass = "short pass";
+                    typePass = "short";
                     break;
                 case lineLength < 30:
-                    typePass = "medium pass";
+                    typePass = "medium";
                     break;
                 default:
-                    typePass = "long pass";
+                    typePass = "long";
             }
             setDataForPass(typePass);
         } else {
-            console.log("line not drawn");
+            setDataMSC(mouseDown[0], mouseDown[1]);
         }
     }
 
