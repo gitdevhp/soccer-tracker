@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
+import FieldImg from "../img/field.png";
 
 function Field() {
 
@@ -21,14 +22,14 @@ function Field() {
 
     const [sec, setSec] = useState(0);
     const [min, setMin] = useState(0);
-
     const [Ypasses, setYpasses] = useState(0);
     const [Npasses, setNpasses] = useState(0);
-
     const [Yshots, setYShots] = useState(0);
     const [Nshots, setNShots] = useState(0);
-
     const [tackles, setTackles] = useState(0);
+
+    const [mouseDown, setMouseDown] = useState([0, 0]);
+    const [mouseUp, setMouseUp] = useState([0, 0]);
 
     const resetStats = () => {
         setYpasses(0);
@@ -68,7 +69,7 @@ function Field() {
     }
 
     var updatedSec = sec, updatedMin = min;
-    
+
     const runTimer = () => {
         updatedSec++;
         if (updatedSec === 60) {
@@ -109,8 +110,8 @@ function Field() {
             const scorePP = {
                 score: `${score[0]} - ${score[1]}`,
             }
-            
-            const h2 = { ...halfStats , ...scorePP };
+
+            const h2 = { ...halfStats, ...scorePP };
             var h1Stats = JSON.parse(localStorage.getItem('saveGame'));
             localStorage.setItem('saveGame', JSON.stringify(h1Stats.concat(h2)));
         }
@@ -130,11 +131,61 @@ function Field() {
         setScore([score[0], score[1] + 1]);
     }
 
+    // mouse events
+
+    const handleMouseDown = (e) => {
+        setMouseDown(e.clientX, e.clientY);
+    }
+
+    const handleMouseUp = (e) => {
+        setMouseUp(e.clientX, e.clientY);
+        lineDrawn();
+    }
+
+    const handleMouseClick = (e) => {
+
+    }
+
+    const lineDrawn = () => {
+        if (mouseDown[0] !== mouseUp[0] && mouseDown[1] !== mouseUp[1]) {
+            console.log("line drawn");
+            const lineLengthX = mouseUp[0] - mouseDown[0];
+            const lineLengthY = mouseUp[1] - mouseDown[1];
+            const lineLength = Math.sqrt(Math.pow(lineLengthX, 2) + Math.pow(lineLengthY, 2));
+            var typePass;
+            switch (lineLength) {
+                case lineLength < 10:
+                    typePass = "short pass";
+                    break;
+                case lineLength < 30:
+                    typePass = "medium pass";
+                    break;
+                default:
+                    typePass = "long pass";
+            }
+            setDataForPass(typePass);
+        } else {
+            console.log("line not drawn");
+        }
+    }
+
+    const setDataForPass = (typePass) => {
+
+    }
+
     return (
         <>
             <Layout>
                 <h3>{time}</h3>
                 <h3>{score[0]} - {score[1]}</h3>
+                <img src={FieldImg} className="fieldPNG" alt="field"
+                    onMouseDown={handleMouseDown}
+                    onMouseUp={handleMouseUp}
+                    onMouseLeave={handleMouseUp}
+                    onMouseOut={handleMouseUp}
+                    onMouseClick={handleMouseClick}
+
+                />
                 {timerStatus === 0 && (
                     <button onClick={startTimer}>Start</button>
                 )} {timerStatus === 1 && (
