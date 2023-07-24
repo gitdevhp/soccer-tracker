@@ -155,6 +155,10 @@ function Field() {
         c++;
     }
 
+    const lookForClick = () => {
+        
+    }
+
     const lineDrawn = () => {
         if (mouseDown[0] !== mouseUp[0] && mouseDown[1] !== mouseUp[1]) {
             console.log("line drawn");
