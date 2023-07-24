@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import FieldImg from "../img/field.png";
+import { click } from "@testing-library/user-event/dist/click";
 
 function Field() {
 
@@ -30,6 +31,12 @@ function Field() {
 
     const [mouseDown, setMouseDown] = useState([0, 0]);
     const [mouseUp, setMouseUp] = useState([0, 0]);
+    const [mouseClick, setMouseClick] = useState(0);
+
+    //field dimensions relative to field image
+    //subject to change
+    const goalAreaX = [.05, .95];
+    const goalAreaY = [.25, .75];
 
     const resetStats = () => {
         setYpasses(0);
@@ -142,8 +149,10 @@ function Field() {
         lineDrawn();
     }
 
+    var c = 0;
     const handleMouseClick = (e) => {
-
+        lookForClick();
+        c++;
     }
 
     const lineDrawn = () => {
@@ -163,14 +172,56 @@ function Field() {
                 default:
                     typePass = "long";
             }
-            setDataForPass(typePass);
+            setDataForLine(typePass);
         } else {
-            setDataMSC(mouseDown[0], mouseDown[1]);
+            handleMouseClick();
         }
     }
 
-    const setDataForPass = (typePass) => {
+    const setDataForLine = (typeLine) => {
+        let kickType;
+        let status;
+        let clickAMT;
+        if (mouseUp[0] > goalAreaX[0] &&
+            mouseUp[0] < goalAreaX[1] &&
+            mouseUp[1] > goalAreaY[0] &&
+            mouseUp[1] < goalAreaY[1]) {
+            kickType = 'shot';
+            setYShots(yshots => yshots + 1);
+        } //add more cases for different types of kicks below
 
+        clickAMT = window.addEventListener('click', searchForClick);
+
+        if (clickAMT === 1) {
+            status = 'miss';
+        } else {
+            status = 'complete';
+        }
+        const data = {
+            timeOfOccur: time,
+            type: kickType,
+            status: status,
+            typePass: typeLine,
+
+            x1: mouseDown[0],
+            y1: mouseDown[1],
+            x2: mouseUp[0],
+            y2: mouseUp[1],
+        }
+        var dataArr = JSON.parse(localStorage.getItem('gameDataTemp'));
+        dataArr.concat(data);
+    }
+
+    const searchForClick = () => {
+        click++;
+        if (click === 2) {
+            window.removeEventListener('click', searchForClick);
+            return click;
+        }
+        setTimeout(() => {
+            window.removeEventListener('click', searchForClick);
+            return click;
+        }, 2000);
     }
 
     return (
