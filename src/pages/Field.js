@@ -142,14 +142,16 @@ function Field() {
 
     const handleMouseDown = (e) => {
         setMouseDown(e.clientX, e.clientY);
-        console.log(mouseDown[0] , mouseDown[1]);
+        console.log(mouseDown[0]);
+        console.log(mouseDown[1]);
         window.addEventListener('mouseup', handleMouseUp);
     }
 
     const handleMouseUp = (e) => {
         setMouseUp(e.clientX, e.clientY);
+        console.log('mouse up')
         console.log(mouseUp[0], mouseUp[1]);
-        window.removeEventListener(handleMouseUp);
+        window.removeEventListener('mouseup', handleMouseUp);
         lineDrawn();
     }
 
