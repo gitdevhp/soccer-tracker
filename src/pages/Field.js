@@ -142,12 +142,14 @@ function Field() {
 
     const handleMouseDown = (e) => {
         setMouseDown(e.clientX, e.clientY);
-        console.log(mouseDown);
+        console.log(mouseDown[0] , mouseDown[1]);
+        window.addEventListener('mouseup', handleMouseUp);
     }
 
     const handleMouseUp = (e) => {
         setMouseUp(e.clientX, e.clientY);
-        console.log(mouseUp);
+        console.log(mouseUp[0], mouseUp[1]);
+        window.removeEventListener(handleMouseUp);
         lineDrawn();
     }
 
@@ -232,9 +234,7 @@ function Field() {
                 <h3>{score[0]} - {score[1]}</h3>
                 <img src={FieldImg} className="fieldPNG" alt="field"
                     onMouseDown={handleMouseDown}
-                    onMouseUp={handleMouseUp}
-                    onMouseLeave={handleMouseUp}
-                    onMouseOut={handleMouseUp}
+                    //onMouseUp={handleMouseUp}
                     onMouseClick={handleMouseClick}
 
                 />
