@@ -142,10 +142,12 @@ function Field() {
 
     const handleMouseDown = (e) => {
         setMouseDown(e.clientX, e.clientY);
+        console.log(mouseDown);
     }
 
     const handleMouseUp = (e) => {
         setMouseUp(e.clientX, e.clientY);
+        console.log(mouseUp);
         lineDrawn();
     }
 
