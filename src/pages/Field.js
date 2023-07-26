@@ -141,14 +141,15 @@ function Field() {
     // mouse events
 
     const handleMouseDown = (e) => {
-        setMouseDown(e.clientX, e.clientY);
+        setMouseDown([e.clientX, e.clientY]);
+        console.log('mouse down');
         console.log(mouseDown[0]);
         console.log(mouseDown[1]);
         window.addEventListener('mouseup', handleMouseUp);
     }
 
     const handleMouseUp = (e) => {
-        setMouseUp(e.clientX, e.clientY);
+        setMouseUp([e.clientX, e.clientY]);
         console.log('mouse up')
         console.log(mouseUp[0], mouseUp[1]);
         window.removeEventListener('mouseup', handleMouseUp);
@@ -193,13 +194,13 @@ function Field() {
             mouseUp[0] < goalAreaX[1] &&
             mouseUp[1] > goalAreaY[0] &&
             mouseUp[1] < goalAreaY[1]) {
-            checkClicks('shot');
+            checkClicks('shot', null);
         } else {
-            checkClicks('pass');
+            checkClicks('pass', typePass);
         }
     }
 
-    const checkClicks = (t) => {
+    const checkClicks = (t, spec) => {
         window.addEventListener('click', () => click++);
         setTimeout(() => {
             window.removeEventListener('click', () => click++);
@@ -209,6 +210,19 @@ function Field() {
                         setNpasses(npasses => npasses + 1);
                     } else {
                         setYpasses(ypasses => ypasses + 1);
+                        switch (spec) {
+                        case 'short':
+                            console.log("short pass");
+                            break;
+                        case 'medium':
+                            console.log("medium pass");
+                            break;
+                        case 'long':
+                            console.log("long pass");
+                            break;
+                        default:
+                            console.log("error pass unassigned");
+                        }
                     }
                     break;
                 case 'shot':
@@ -216,6 +230,7 @@ function Field() {
                         setNShots(nshots => nshots + 1);
                     } else {
                         setYShots(yshots => yshots + 1);
+                        setScore([score[0] + 1, score[1]]);
                     }
                     break;
                 case 'misc':
@@ -236,15 +251,16 @@ function Field() {
                 <h3>{score[0]} - {score[1]}</h3>
                 <img src={FieldImg} className="fieldPNG" alt="field"
                     onMouseDown={handleMouseDown}
-                    //onMouseUp={handleMouseUp}
                     onMouseClick={handleMouseClick}
-
                 />
                 {timerStatus === 0 && (
                     <button onClick={startTimer}>Start</button>
                 )} {timerStatus === 1 && (
                     <>
                         <button onClick={stopTimer}>Stop</button>
+                        <button onClick={addPass}>Pass</button>
+                        <button onClick={addScore}>Goal For</button>
+                        <button onClick={addEnemScore}>Goal Against</button>
                     </>
                 )} {timerStatus === 2 && (
                     <>
@@ -256,9 +272,6 @@ function Field() {
                 )} {half === 2 && (
                     <button onClick={halfEnd}><Link to="/summary">End Game</Link></button>
                 )}
-                <button onClick={addPass}>Pass</button>
-                <button onClick={addScore}>Goal For</button>
-                <button onClick={addEnemScore}>Goal Against</button>
             </Layout>
         </>
     )
