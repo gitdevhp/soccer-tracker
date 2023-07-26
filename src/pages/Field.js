@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import FieldImg from "../img/field.png";
-var typePass ='';
 
 function Field() {
+    var typePass = '';
     var click = 0;
 
     let adjTime = "00:10";
