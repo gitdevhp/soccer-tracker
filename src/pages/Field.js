@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import FieldImg from "../img/field.png";
+var typePass ='';
 
 function Field() {
     var click = 0;
@@ -172,7 +173,6 @@ function Field() {
             const lineLengthX = mouseUp[0] - mouseDown[0];
             const lineLengthY = mouseUp[1] - mouseDown[1];
             const lineLength = Math.sqrt(Math.pow(lineLengthX, 2) + Math.pow(lineLengthY, 2));
-            var typePass;
             switch (lineLength) {
                 case lineLength < 10:
                     typePass = "short";
