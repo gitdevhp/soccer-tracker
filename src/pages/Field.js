@@ -35,8 +35,8 @@ function Field() {
 
     //field dimensions relative to field image
     //subject to change
-    const goalAreaX = [.05, .95];
-    const goalAreaY = [.25, .75];
+    const goalAreaX = [200, 270];
+    const goalAreaY = [170, 200];
 
     const resetStats = () => {
         setYpasses(0);
@@ -241,6 +241,7 @@ function Field() {
                 default:
                     console.log("error clicks unassigned");
             }
+            console.log(t);
         }, 1000);
     }
 
