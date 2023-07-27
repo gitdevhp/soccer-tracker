@@ -14,7 +14,6 @@ function LocalStorage() {
             localStorage.getItem('graphPreset') === undefined ||
             localStorage.getItem('graphPreset') === 'undefined'
         ) {
-            setGraphCount(graphCount-1);
             localStorage.setItem(
                 'graphPreset',
                 JSON.stringify([{ id: graphCount, data: "Tackles", format: "Bar" }]));
@@ -22,6 +21,7 @@ function LocalStorage() {
         } else {
             loadGraphs();
         }
+        setGraphCount(newGraphData.length);
     }, []);
 
     const addGraph = () => {
