@@ -21,7 +21,7 @@ function LocalStorage() {
         } else {
             loadGraphs();
         }
-        setGraphCount(newGraphData.length);
+        setGraphCount(graphData.length);
     }, []);
 
     const addGraph = () => {
