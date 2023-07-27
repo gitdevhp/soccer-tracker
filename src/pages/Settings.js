@@ -9,6 +9,7 @@ function LocalStorage() {
 
 
     useEffect(() => {
+        loadGraphs();
         if (
             localStorage.getItem('graphPreset') === null ||
             localStorage.getItem('graphPreset') === undefined ||
@@ -18,9 +19,7 @@ function LocalStorage() {
                 'graphPreset',
                 JSON.stringify([{ id: graphCount, data: "Tackles", format: "Bar" }]));
                 loadGraphs();
-                setGraphCount(graphData.length);
         } else {
-            loadGraphs();
             setGraphCount(graphData.length);
         }
     }, []);
