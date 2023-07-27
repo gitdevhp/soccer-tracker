@@ -17,6 +17,7 @@ function LocalStorage() {
             localStorage.setItem(
                 'graphPreset',
                 JSON.stringify([{ id: graphCount, data: "Tackles", format: "Bar" }]));
+                loadGraphs();
         } else {
             loadGraphs();
         }
