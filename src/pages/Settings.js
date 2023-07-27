@@ -18,10 +18,11 @@ function LocalStorage() {
                 'graphPreset',
                 JSON.stringify([{ id: graphCount, data: "Tackles", format: "Bar" }]));
                 loadGraphs();
+                setGraphCount(graphData.length);
         } else {
             loadGraphs();
+            setGraphCount(graphData.length);
         }
-        setGraphCount(graphData.length);
     }, []);
 
     const addGraph = () => {
@@ -63,7 +64,7 @@ function LocalStorage() {
         localStorage.setItem('graphPreset', JSON.stringify(graphData));
     };
 
-    const loadGraphs = () => {
+    const loadGraphs = async() => {
         const data = localStorage.getItem('graphPreset');
         if (data) {
             const parsedData = JSON.parse(data);
