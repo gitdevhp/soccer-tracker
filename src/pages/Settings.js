@@ -4,7 +4,7 @@ import Layout from "../components/Layout";
 
 function LocalStorage() {
 
-    const [graphCount, setGraphCount] = useState(1);
+    const [graphCount, setGraphCount] = useState(0);
     const [graphData, setGraphData] = useState([]);
 
 
