@@ -15,6 +15,8 @@ function Field() {
     const [mouseUpX, setMouseUpX] = useState(0);
     const [mouseUpY, setMouseUpY] = useState(0);
     
+    const [endX, setEndX] = useState(0);
+    const [endY, setEndY] = useState(0);
     //time settings
     let adjTime = "00:10";
 
@@ -148,6 +150,7 @@ function Field() {
     // mouse events
 
     const handleMouseDown = (e) => {
+        setIsDrawing(true);
         setMouseDownX(e.clientX);
         setMouseDownY(e.clientY);
         console.log('mouse down');
@@ -157,6 +160,7 @@ function Field() {
     }
 
     const handleMouseUp = (e) => {
+        setIsDrawing(false);
         setMouseUpX(e.clientX);
         setMouseUpY(e.clientY);
         console.log('mouse up')
@@ -175,14 +179,27 @@ function Field() {
         checkClicks();
     }
 
+    const handleMouseMove = (e) => {
+        if (!isDrawing) return;
+        setEndX(e.nativeEvent.offsetX);
+        setEndY(e.nativeEvent.offsetY);
+    }
     //Algorithm for tracking and storing data
     //This is where most change will happen in terms of updates to data Tracked
     
     const lineDrawn = () => {
-        if (mouseDown[0] !== mouseUp[0] && mouseDown[1] !== mouseUp[1]) {
+        if (mouseDownX !== mouseUpX || mouseDownY !== mouseUpY) {
             console.log("line drawn");
-            const lineLengthX = mouseUp[0] - mouseDown[0];
-            const lineLengthY = mouseUp[1] - mouseDown[1];
+            const canvas = canvasRef.current;
+            if (!canvas) return;
+            const context = canvas.getContext('2d');
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.beginPath();
+            context.moveTo(mouseDownX, mouseDownY);
+            context.lineTo(mouseUpX, mouseUpY);
+            context.stroke();
+            const lineLengthX = mouseUpX - mouseDownX;
+            const lineLengthY = mouseUpY - mouseDownY;
             const lineLength = Math.sqrt(Math.pow(lineLengthX, 2) + Math.pow(lineLengthY, 2));
             switch (lineLength) {
                 case lineLength < 10:
@@ -201,10 +218,10 @@ function Field() {
     }
 
     const setDataForLine = () => {
-        if (mouseUp[0] > goalAreaX[0] &&
-            mouseUp[0] < goalAreaX[1] &&
-            mouseUp[1] > goalAreaY[0] &&
-            mouseUp[1] < goalAreaY[1]) {
+        if (mouseUpX > goalAreaX[0] &&
+            mouseUpX < goalAreaX[1] &&
+            mouseUpY > goalAreaY[0] &&
+            mouseUpY < goalAreaY[1]) {
             checkClicks('shot', null);
         } else {
             checkClicks('pass', typePass);
