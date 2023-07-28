@@ -261,14 +261,20 @@ function Field() {
             <Layout>
                 <h3>{time}</h3>
                 <h3>{score[0]} - {score[1]}</h3>
-                <img src={FieldImg} className="fieldPNG" alt="field"
+                <div 
+                className="canvas-container"
+                onMouseDown={handleMouseDown}
+                onMouseClick={handleMouseClick}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                >
+                <img src={FieldImg} className="fieldPNG" alt="field"/>
                 <canvas 
-                    onMouseDown={handleMouseDown}
-                    onMouseClick={handleMouseClick}
                     ref={canvasRef}
-                    onMouseMove={handleMouseMove}
+                    width={fieldPNG.width}
+                    height={fieldPNG.height}
                 />
-                />
+                </div>
                 {timerStatus === 0 && (
                     <button onClick={startTimer}>Start</button>
                 )} {timerStatus === 1 && (
