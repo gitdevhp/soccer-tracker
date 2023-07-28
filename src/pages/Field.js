@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import FieldImg from "../img/field.png";
@@ -7,6 +7,15 @@ function Field() {
     var typePass = '';
     var click = 0;
 
+    //drawing line stuff
+    const canvasRef = useRef(null);
+    const [isDrawing, setIsDrawing] = useState(false);
+    const [mouseDownX, setMouseDownX] = useState(0);
+    const [mouseDownY, setMouseDownY] = useState(0);
+    const [mouseUpX, setMouseUpX] = useState(0);
+    const [mouseUpY, setMouseUpY] = useState(0);
+    
+    //time settings
     let adjTime = "00:10";
 
     const [interv, setInterv] = useState();
@@ -29,9 +38,6 @@ function Field() {
     const [Yshots, setYShots] = useState(0);
     const [Nshots, setNShots] = useState(0);
     const [tackles, setTackles] = useState(0);
-
-    const [mouseDown, setMouseDown] = useState([0, 0]);
-    const [mouseUp, setMouseUp] = useState([0, 0]);
 
     //field dimensions relative to field image
     //subject to change
@@ -142,24 +148,29 @@ function Field() {
     // mouse events
 
     const handleMouseDown = (e) => {
-        setMouseDown([e.clientX, e.clientY]);
+        setMouseDownX(e.clientX);
+        setMouseDownY(e.clientY);
         console.log('mouse down');
-        console.log(mouseDown[0]);
-        console.log(mouseDown[1]);
+        console.log(mouseDownX);
+        console.log(mouseDownY);
         window.addEventListener('mouseup', handleMouseUp);
     }
 
     const handleMouseUp = (e) => {
-        setMouseUp([e.clientX, e.clientY]);
+        setMouseUpX(e.clientX);
+        setMouseUpY(e.clientY);
         console.log('mouse up')
-        console.log(mouseUp[0], mouseUp[1]);
+        console.log(mouseUpX);
+        console.log(mouseUpY);
         window.removeEventListener('mouseup', handleMouseUp);
         lineDrawn();
     }
 
     const handleMouseClick = (e) => {
-        setMouseUp(e.clientX, e.clientY);
-        setMouseDown(e.clientX, e.clientY);
+        setMouseUpX(e.clientX);
+        setMouseUpY(e.clientY);
+        setMouseDownX(e.clientX);
+        setMouseDownY(e.clientY);
         click++;
         checkClicks();
     }
@@ -251,8 +262,12 @@ function Field() {
                 <h3>{time}</h3>
                 <h3>{score[0]} - {score[1]}</h3>
                 <img src={FieldImg} className="fieldPNG" alt="field"
+                <canvas 
                     onMouseDown={handleMouseDown}
                     onMouseClick={handleMouseClick}
+                    ref={canvasRef}
+                    onMouseMove={handleMouseMove}
+                />
                 />
                 {timerStatus === 0 && (
                     <button onClick={startTimer}>Start</button>
