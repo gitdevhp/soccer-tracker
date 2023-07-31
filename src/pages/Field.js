@@ -175,6 +175,7 @@ function Field() {
         setMouseUpY(e.clientY);
         setMouseDownX(e.clientX);
         setMouseDownY(e.clientY);
+        console.log("mouse click");
         click++;
         checkClicks();
     }
@@ -288,8 +289,8 @@ function Field() {
                 <img src={FieldImg} className="fieldPNG" alt="field"/>
                 <canvas 
                     ref={canvasRef}
-                    width={fieldPNG.width}
-                    height={fieldPNG.height}
+                    width={FieldImg.width}
+                    height={FieldImg.height}
                 />
                 </div>
                 {timerStatus === 0 && (

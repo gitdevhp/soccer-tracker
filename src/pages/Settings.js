@@ -22,6 +22,9 @@ function LocalStorage() {
             loadGraphs();
             console.log(graphCount);
         }
+        console.log(graphCount);
+        console.log(graphData)
+        console.log(localStorage.getItem('graphPreset'));
     }, []);
 
     const addGraph = () => {
