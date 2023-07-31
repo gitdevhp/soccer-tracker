@@ -21,10 +21,10 @@ function LocalStorage() {
                 loadGraphs();
         } else {
             loadGraphs();
-        }
-        console.log(graphCount);
+            console.log(graphCount);
         console.log(graphData)
         console.log(localStorage.getItem('graphPreset'));
+        }
     }, []);
 
     const addGraph = () => {
