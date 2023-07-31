@@ -22,7 +22,7 @@ function LocalStorage() {
         } else {
             loadGraphs();
             console.log(graphCount);
-        console.log(graphData)
+        console.log(graphData);
         console.log(localStorage.getItem('graphPreset'));
         }
     }, []);
@@ -67,12 +67,22 @@ function LocalStorage() {
     };
 
     const loadGraphs = async() => {
+        try {
         const data = localStorage.getItem('graphPreset');
-        if (data) {
-            const parsedData = JSON.parse(data);
+        if (!data) {
+            console.log('no data');
+            return;
+        } 
+        const parsedData = JSON.parse(data);
+        if (!Array.isArray(parsedData)) {
+            console.log('Parsed data is not an array:', parsedData);
+            return;
+          }
             setGraphData(parsedData);
             setGraphCount(parsedData.length + 1);
-        }
+        } catch (error) {
+                console.log('Error loading graphs:', error);
+              }
     };
 
     const updateLocalStorage = () => {
