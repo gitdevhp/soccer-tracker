@@ -17,10 +17,10 @@ function LocalStorage() {
             localStorage.setItem(
                 'graphPreset',
                 JSON.stringify([{ id: graphCount, data: "Tackles", format: "Bar" }]));
+                console.log('no preset')
                 loadGraphs();
         } else {
             loadGraphs();
-            console.log(graphCount);
         }
         console.log(graphCount);
         console.log(graphData)
