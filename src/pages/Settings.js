@@ -67,6 +67,7 @@ function LocalStorage() {
     };
 
     const loadGraphs = async() => {
+        console.log('loading graphs');
         try {
         const data = localStorage.getItem('graphPreset');
         if (!data) {
@@ -74,10 +75,7 @@ function LocalStorage() {
             return;
         } 
         const parsedData = JSON.parse(data);
-        if (!Array.isArray(parsedData)) {
-            console.log('Parsed data is not an array:', parsedData);
-            return;
-          }
+        console.log("parsed data: ", parsedData);
             setGraphData(parsedData);
             setGraphCount(parsedData.length + 1);
         } catch (error) {
