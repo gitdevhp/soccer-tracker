@@ -74,7 +74,7 @@ function LocalStorage() {
             console.log('no data');
             return;
         } 
-        const parsedData = JSON.parse(data);
+        let parsedData = JSON.parse(data);
         console.log("parsed data: ", parsedData);
             setGraphData(parsedData);
             setGraphCount(parsedData.length + 1);
