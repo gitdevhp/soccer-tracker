@@ -35,7 +35,9 @@ function LocalStorage() {
     };
 
     const removeGraph = (id) => {
+        console.log(id);
         const graphIndex = graphData.findIndex((graph) => graph.id === id);
+        console.log(graphIndex);
         if (graphIndex !== -1) {
             const newGraphData = [...graphData];
             newGraphData.splice(graphIndex, 1);
