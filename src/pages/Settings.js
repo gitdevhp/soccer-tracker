@@ -21,9 +21,6 @@ function LocalStorage() {
                 loadGraphs();
         } else {
             loadGraphs();
-            console.log(graphCount);
-        console.log(graphData);
-        console.log(localStorage.getItem('graphPreset'));
         }
     }, []);
 
@@ -48,8 +45,8 @@ function LocalStorage() {
             });
             
             saveGraphs();
-            loadGraphs();
         }
+        loadGraphs();
     };
 
     const updateGraph = (id, data, format) => {
