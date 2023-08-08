@@ -46,8 +46,10 @@ function LocalStorage() {
             
             saveGraphs();
         }
-        //loadGraphs();
     };
+    useEffect(() => {
+        loadGraphs();
+      }, [graphData]);
 
     const updateGraph = (id, data, format) => {
         const updatedGraph = { id, data, format };
