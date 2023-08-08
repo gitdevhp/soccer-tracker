@@ -39,9 +39,8 @@ function LocalStorage() {
         const graphIndex = graphData.findIndex((graph) => graph.id === id);
         console.log(graphIndex);
         if (graphIndex !== -1) {
-            const newGraphData = [...graphData];
+            let newGraphData = [...graphData];
             console.log(newGraphData);
-            newGraphData.splice(graphIndex, 1);
             console.log(newGraphData.splice(graphIndex, 1));
             setGraphData(newGraphData);
             setGraphCount(newGraphData.length);
