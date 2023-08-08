@@ -46,7 +46,7 @@ function LocalStorage() {
             
             saveGraphs();
         }
-        loadGraphs();
+        //loadGraphs();
     };
 
     const updateGraph = (id, data, format) => {
