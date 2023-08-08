@@ -24,20 +24,12 @@ function LocalStorage() {
         }
     }, []);
 
-    /*const addGraph = () => {
+    const addGraph = () => {
         setGraphCount(graphCount => graphCount + 1);
         const newGraph = { id: graphCount, data: "Tackles", format: "Bar" };
         setGraphData(prevGraphData => [...prevGraphData, newGraph]);
         saveGraphs();
-    };*/
-
-    const addGraph = () => {
-        setGraphData((prevGraphData) => [
-          ...prevGraphData,
-          { id: graphCount, data: [], format: {} },
-        ]);
-        setGraphCount((prevCount) => prevCount + 1);
-      };
+    };
 
     /*const removeGraph = (id) => {
         console.log(id);
