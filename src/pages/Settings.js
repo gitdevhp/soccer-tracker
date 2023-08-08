@@ -24,28 +24,45 @@ function LocalStorage() {
         }
     }, []);
 
-    const addGraph = () => {
+    /*const addGraph = () => {
         setGraphCount(graphCount => graphCount + 1);
         const newGraph = { id: graphCount, data: "Tackles", format: "Bar" };
         setGraphData(prevGraphData => [...prevGraphData, newGraph]);
         saveGraphs();
-    };
+    };*/
 
-    const removeGraph = (id) => {
+    const addGraph = () => {
+        setGraphData((prevGraphData) => [
+          ...prevGraphData,
+          { id: graphCount, data: [], format: {} },
+        ]);
+        setGraphCount((prevCount) => prevCount + 1);
+      };
+
+    /*const removeGraph = (id) => {
         console.log(id);
         const graphIndex = graphData.findIndex((graph) => graph.id === id);
         console.log(graphIndex);
         if (graphIndex !== -1) {
             const newGraphData = [...graphData];
             console.log(newGraphData.splice(graphIndex, 1));
-            setGraphData(prevGraphData => [...prevGraphData, newGraphData]);
+            setGraphData(newGraphData);
             setGraphCount(newGraphData.length);
             newGraphData.forEach((graph, index) => {
                 graph.id = index;
             });   
         }
         saveGraphs();
-    };
+        console.log(graphData);
+    };*/
+
+    const removeGraph = (id) => {
+        setGraphData((prevGraphData) =>
+          prevGraphData.filter((graph) => graph.id !== id)
+        );
+        setGraphCount((prevCount) => prevCount - 1);
+        saveGraphs();
+      };
 
     const updateGraph = (id, data, format) => {
         const updatedGraph = { id, data, format };
