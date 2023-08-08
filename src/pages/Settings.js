@@ -31,7 +31,7 @@ function LocalStorage() {
         setGraphCount(graphCount => graphCount + 1);
         const newGraph = { id: graphCount, data: "Tackles", format: "Bar" };
         setGraphData(prevGraphData => [...prevGraphData, newGraph]);
-        updateLocalStorage();
+        saveGraphs();
     };
 
     const removeGraph = (id) => {
@@ -39,17 +39,16 @@ function LocalStorage() {
         const graphIndex = graphData.findIndex((graph) => graph.id === id);
         console.log(graphIndex);
         if (graphIndex !== -1) {
-            let newGraphData = [...graphData];
-            console.log(newGraphData);
+            const newGraphData = [...graphData];
             console.log(newGraphData.splice(graphIndex, 1));
-            console.log(newGraphData);
             setGraphData(newGraphData);
             setGraphCount(newGraphData.length);
             newGraphData.forEach((graph, index) => {
                 graph.id = index;
             });
             
-            updateLocalStorage();
+            saveGraphs();
+            loadGraphs();
         }
     };
 
@@ -63,7 +62,7 @@ function LocalStorage() {
             newGraphData[index] = updatedGraph;
             setGraphData(newGraphData);
         }
-        updateLocalStorage();
+        saveGraphs();
     };
 
     const saveGraphs = () => {
@@ -83,9 +82,6 @@ function LocalStorage() {
             setGraphCount(parsedData.length);
     };
 
-    const updateLocalStorage = () => {
-        localStorage.setItem('graphPreset', JSON.stringify(graphData));
-    };
     return (
         <>
             <Layout>
