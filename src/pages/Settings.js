@@ -38,18 +38,14 @@ function LocalStorage() {
         if (graphIndex !== -1) {
             const newGraphData = [...graphData];
             console.log(newGraphData.splice(graphIndex, 1));
-            setGraphData(newGraphData);
+            setGraphData(prevGraphData => [...prevGraphData, newGraphData]);
             setGraphCount(newGraphData.length);
             newGraphData.forEach((graph, index) => {
                 graph.id = index;
-            });
-            
-            saveGraphs();
+            });   
         }
+        saveGraphs();
     };
-    useEffect(() => {
-        loadGraphs();
-      }, [graphData]);
 
     const updateGraph = (id, data, format) => {
         const updatedGraph = { id, data, format };
