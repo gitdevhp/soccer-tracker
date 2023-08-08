@@ -40,7 +40,9 @@ function LocalStorage() {
         console.log(graphIndex);
         if (graphIndex !== -1) {
             const newGraphData = [...graphData];
+            console.log(newGraphData);
             newGraphData.splice(graphIndex, 1);
+            console.log(newGraphData.splice(graphIndex, 1));
             setGraphData(newGraphData);
             setGraphCount(newGraphData.length);
             newGraphData.forEach((graph, index) => {
@@ -70,7 +72,6 @@ function LocalStorage() {
 
     const loadGraphs = async() => {
         console.log('loading graphs');
-        try {
         const data = localStorage.getItem('graphPreset');
         if (!data) {
             console.log('no data');
@@ -80,9 +81,6 @@ function LocalStorage() {
         console.log("parsed data: ", parsedData);
             setGraphData(parsedData);
             setGraphCount(parsedData.length);
-        } catch (error) {
-                console.log('Error loading graphs:', error);
-              }
     };
 
     const updateLocalStorage = () => {
