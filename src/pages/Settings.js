@@ -52,6 +52,9 @@ function LocalStorage() {
         setGraphData((prevGraphData) =>
           prevGraphData.filter((graph) => graph.id !== id)
         );
+        graphData.forEach((graph,index) => {
+            graph.id = index;
+        });
         setGraphCount((prevCount) => prevCount - 1);
         saveGraphs();
       };
