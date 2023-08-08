@@ -42,6 +42,7 @@ function LocalStorage() {
             let newGraphData = [...graphData];
             console.log(newGraphData);
             console.log(newGraphData.splice(graphIndex, 1));
+            console.log(newGraphData);
             setGraphData(newGraphData);
             setGraphCount(newGraphData.length);
             newGraphData.forEach((graph, index) => {
