@@ -6,7 +6,7 @@ function LocalStorage() {
 
     const [graphCount, setGraphCount] = useState(0);
     const [graphData, setGraphData] = useState([]);
-
+    const [loading, setLoading] = useState(true);
     const [forceRender, setForceRender] = useState(false);
 
     useEffect(() => {
@@ -72,25 +72,31 @@ function LocalStorage() {
             return;
         } 
         let parsedData = JSON.parse(data);
-        console.log("parsed data: ", parsedData);
-            setGraphData(parsedData);
-            setGraphCount(parsedData.length);
+        setGraphData(parsedData);
+        setGraphCount(parsedData.length);
+        setLoading(false);
     };
 
     return (
         <>
             <Layout>
                 <h3>Graph Settings</h3>
-                {graphData.map((graph) => (
-                    <GraphSetting
-                        key={graph.id}
-                        id={graph.id}
-                        data={graph.data}
-                        format={graph.format}
-                        updateGraph={updateGraph}
-                        removeGraph={removeGraph}
-                    />
-                ))}
+                <div>
+                    {loading ? (
+                        <p className="loadText">Loading...</p>
+                    ) : (
+                        graphData.map((graph) => (
+                            <GraphSetting
+                                key={graph.id}
+                                id={graph.id}
+                                data={graph.data}
+                                format={graph.format}
+                                updateGraph={updateGraph}
+                                removeGraph={removeGraph}
+                            />
+                        ))
+                    )}
+                </div>
                 <button className="addGraph" onClick={addGraph}>Add New Graph</button>
                 <div className="nav">
                     <p className="text-center" onClick={saveGraphs}><a href="/">Dashboard</a></p>
