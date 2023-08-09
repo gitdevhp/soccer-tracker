@@ -71,9 +71,11 @@ function LocalStorage() {
             console.log('no data');
             return;
         } 
+        console.log(data);
         setGraphData(data);
         setGraphCount(data.length);
         setLoading(false);
+        console.log(data);
     };
 
     return (
