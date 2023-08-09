@@ -31,14 +31,14 @@ function LocalStorage() {
     };
 
       const removeGraph = (id) => {
-        setGraphData((prevGraphData) => {
-          let newGraphData = prevGraphData.filter((graph) => graph.id !== id);
-          newGraphData.forEach((graphD, index) => {
-            graphD.id = index;
+        setGraphData(prevGraphData => {
+          const newGraphData = prevGraphData.filter((graph) => graph.id !== id);
+          newGraphData.forEach((graph, index) => {
+            graph.id = index;
           });
           return newGraphData;
         });
-        setGraphCount((prevCount) => prevCount - 1);
+        setGraphCount(prevCount => prevCount - 1);
         saveGraphs();
       };
 
