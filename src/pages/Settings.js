@@ -31,21 +31,6 @@ function LocalStorage() {
         saveGraphs();
     };
 
-    /*const removeGraph = (id) => {
-        setGraphData((prevGraphData) =>
-          prevGraphData.filter((graph) => graph.id !== id)
-        );
-        setGraphCount((prevCount) => prevCount - 1);
-        saveGraphs();
-        const newGraphData = [...graphData];
-        graphData.forEach((graph,index) => {
-            graph.id = index;
-            console.log(graph.id);
-        });
-        setGraphData(newGraphData);
-        saveGraphs();
-      };*/
-
       const removeGraph = (id) => {
         setGraphData((prevGraphData) => {
           const newGraphData = prevGraphData.filter((graph) => graph.id !== id);
@@ -57,6 +42,7 @@ function LocalStorage() {
         });
         setGraphCount((prevCount) => prevCount - 1);
         saveGraphs();
+        setForceRender((prevRender) => !prevRender);
       };
 
     const updateGraph = (id, data, format) => {
