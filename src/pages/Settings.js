@@ -32,16 +32,14 @@ function LocalStorage() {
 
       const removeGraph = (id) => {
         setGraphData((prevGraphData) => {
-          const newGraphData = prevGraphData.filter((graph) => graph.id !== id);
+          let newGraphData = prevGraphData.filter((graph) => graph.id !== id);
           newGraphData.forEach((graphD, index) => {
             graphD.id = index;
-            console.log(graphD.id);
           });
           return newGraphData;
         });
         setGraphCount((prevCount) => prevCount - 1);
         saveGraphs();
-        loadGraphs();
       };
 
     const updateGraph = (id, data, format) => {
