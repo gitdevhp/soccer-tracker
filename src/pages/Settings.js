@@ -66,14 +66,13 @@ function LocalStorage() {
 
     const loadGraphs = async() => {
         console.log('loading graphs');
-        const data = localStorage.getItem('graphPreset');
+        const data = JSON.parse(localStorage.getItem('graphPreset'));
         if (!data) {
             console.log('no data');
             return;
         } 
-        let parsedData = JSON.parse(data);
-        setGraphData(parsedData);
-        setGraphCount(parsedData.length);
+        setGraphData(data);
+        setGraphCount(data.length);
         setLoading(false);
     };
 
@@ -85,7 +84,7 @@ function LocalStorage() {
                     {loading ? (
                         <p className="loadText">Loading...</p>
                     ) : (
-                        graphData.map((graph) => (
+                        graphData.map((graph) =>
                             <GraphSetting
                                 key={graph.id}
                                 id={graph.id}
@@ -94,7 +93,7 @@ function LocalStorage() {
                                 updateGraph={updateGraph}
                                 removeGraph={removeGraph}
                             />
-                        ))
+                        )
                     )}
                 </div>
                 <button className="addGraph" onClick={addGraph}>Add New Graph</button>
