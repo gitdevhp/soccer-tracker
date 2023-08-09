@@ -6,8 +6,6 @@ function LocalStorage() {
 
     const [graphCount, setGraphCount] = useState(0);
     const [graphData, setGraphData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [forceRender, setForceRender] = useState(false);
 
     useEffect(() => {
         if (
@@ -23,13 +21,12 @@ function LocalStorage() {
         } else {
             loadGraphs();
         }
-    }, [forceRender, ]);
+    }, []);
 
     const addGraph = () => {
         setGraphCount(graphCount => graphCount + 1);
         const newGraph = { id: graphCount, data: "Tackles", format: "Bar" };
         setGraphData(prevGraphData => [...prevGraphData, newGraph]);
-        setForceRender((prevRender) => !prevRender);
         saveGraphs();
     };
 
@@ -44,7 +41,7 @@ function LocalStorage() {
         });
         setGraphCount((prevCount) => prevCount - 1);
         saveGraphs();
-        setForceRender((prevRender) => !prevRender);
+        loadGraphs();
       };
 
     const updateGraph = (id, data, format) => {
@@ -74,7 +71,6 @@ function LocalStorage() {
         console.log(data);
         setGraphData(data);
         setGraphCount(data.length);
-        setLoading(false);
         console.log(data);
     };
 
@@ -83,10 +79,7 @@ function LocalStorage() {
             <Layout>
                 <h3>Graph Settings</h3>
                 <div>
-                    {loading ? (
-                        <p className="loadText">Loading...</p>
-                    ) : (
-                        graphData.map((graph) =>
+                    {graphData.map((graph) =>
                             <GraphSetting
                                 key={graph.id}
                                 id={graph.id}
@@ -96,7 +89,7 @@ function LocalStorage() {
                                 removeGraph={removeGraph}
                             />
                         )
-                    )}
+                    }
                 </div>
                 <button className="addGraph" onClick={addGraph}>Add New Graph</button>
                 <div className="nav">
