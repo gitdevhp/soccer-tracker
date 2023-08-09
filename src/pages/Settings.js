@@ -53,6 +53,7 @@ function LocalStorage() {
           prevGraphData.filter((graph) => graph.id !== id)
         );
         setGraphCount((prevCount) => prevCount - 1);
+        saveGraphs();
         graphData.forEach((graph,index) => {
             graph.id = index;
             console.log(graph.id);
