@@ -32,32 +32,30 @@ function LocalStorage() {
     };
 
     /*const removeGraph = (id) => {
-        console.log(id);
-        const graphIndex = graphData.findIndex((graph) => graph.id === id);
-        console.log(graphIndex);
-        if (graphIndex !== -1) {
-            const newGraphData = [...graphData];
-            console.log(newGraphData.splice(graphIndex, 1));
-            setGraphData(newGraphData);
-            setGraphCount(newGraphData.length);
-            newGraphData.forEach((graph, index) => {
-                graph.id = index;
-            });   
-        }
-        saveGraphs();
-        console.log(graphData);
-    };*/
-
-    const removeGraph = (id) => {
         setGraphData((prevGraphData) =>
           prevGraphData.filter((graph) => graph.id !== id)
         );
         setGraphCount((prevCount) => prevCount - 1);
         saveGraphs();
+        const newGraphData = [...graphData];
         graphData.forEach((graph,index) => {
             graph.id = index;
             console.log(graph.id);
         });
+        setGraphData(newGraphData);
+        saveGraphs();
+      };*/
+
+      const removeGraph = (id) => {
+        setGraphData((prevGraphData) => {
+          const newGraphData = prevGraphData.filter((graph) => graph.id !== id);
+          newGraphData.forEach((graphD, index) => {
+            graphD.id = index;
+            console.log(graphD.id);
+          });
+          return newGraphData;
+        });
+        setGraphCount((prevCount) => prevCount - 1);
         saveGraphs();
       };
 
