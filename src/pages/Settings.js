@@ -29,6 +29,7 @@ function LocalStorage() {
         setGraphCount(graphCount => graphCount + 1);
         const newGraph = { id: graphCount, data: "Tackles", format: "Bar" };
         setGraphData(prevGraphData => [...prevGraphData, newGraph]);
+        setForceRender((prevRender) => !prevRender);
         saveGraphs();
     };
 
