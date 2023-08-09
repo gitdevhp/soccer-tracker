@@ -7,6 +7,7 @@ function LocalStorage() {
     const [graphCount, setGraphCount] = useState(0);
     const [graphData, setGraphData] = useState([]);
 
+    const [forceRender, setForceRender] = useState(false);
 
     useEffect(() => {
         if (
@@ -22,7 +23,7 @@ function LocalStorage() {
         } else {
             loadGraphs();
         }
-    }, []);
+    }, [forceRender, ]);
 
     const addGraph = () => {
         setGraphCount(graphCount => graphCount + 1);
