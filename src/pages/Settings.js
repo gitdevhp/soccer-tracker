@@ -39,6 +39,9 @@ function LocalStorage() {
           return newGraphData;
         });
         setGraphCount(prevCount => prevCount - 1);
+        //test below wikll remove
+        const newGraph = { id: graphCount, data: "Tackles", format: "Bar" };
+        setGraphData(prevGraphData => [...prevGraphData, newGraph]);
         saveGraphs();
       };
 
