@@ -39,9 +39,6 @@ function LocalStorage() {
           return newGraphData;
         });
         setGraphCount(prevCount => prevCount - 1);
-        //test below wikll remove
-        const newGraph = { id: graphCount, data: "Tackles", format: "Bar" };
-        setGraphData(prevGraphData => [...prevGraphData, newGraph]);
         saveGraphs();
       };
 
@@ -80,7 +77,7 @@ function LocalStorage() {
             <Layout>
                 <h3>Graph Settings</h3>
                 <div>
-                    {graphData.map((graph) =>
+                    {graphData.map(graph =>
                             <GraphSetting
                                 key={graph.id}
                                 id={graph.id}
