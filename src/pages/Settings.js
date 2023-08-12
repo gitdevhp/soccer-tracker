@@ -25,17 +25,18 @@ function LocalStorage() {
 
     const addGraph = () => {
         setGraphCount(graphCount => graphCount + 1);
-        const newGraph = { id: graphCount, data: "Tackles", format: "Bar" };
+        const newGraph = { id: graphCount, data: "Passes", format: "Bar" };
         setGraphData(prevGraphData => [...prevGraphData, newGraph]);
         saveGraphs();
     };
 
       const removeGraph = (id) => {
         setGraphData(prevGraphData => {
-          const newGraphData = prevGraphData.filter((graph) => graph.id !== id);
-          newGraphData.forEach((graph, index) => {
-            graph.id = index;
-          });
+          const newGraphData = prevGraphData.filter(graph => graph.id !== id);
+          newGraphData.map((graph, index) => ({
+            ...graph, 
+            id:index
+          }));
           return newGraphData;
         });
         setGraphCount(prevCount => prevCount - 1);
@@ -77,7 +78,7 @@ function LocalStorage() {
             <Layout>
                 <h3>Graph Settings</h3>
                 <div>
-                    {graphData.map(graph =>
+                    {graphData.map((graph) =>
                             <GraphSetting
                                 key={graph.id}
                                 id={graph.id}
