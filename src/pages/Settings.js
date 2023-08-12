@@ -33,9 +33,6 @@ function LocalStorage() {
       const removeGraph = (id) => {
         setGraphData(prevGraphData => {
           const newGraphData = prevGraphData.filter(graph => graph.id !== id);
-          newGraphData.forEach((graph, index) => {
-            graph.id = index;
-          });
           newGraphData.map((graph, index) => ({
             ...graph, 
             id:index
